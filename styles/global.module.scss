@@ -29,6 +29,13 @@
         background: $danger !important;
         border-color: darken($danger, 5%);
       }
+
+      &.clear {
+        background: transparent !important;
+        color: $default_black;
+        border: none !important;
+        box-shadow: none !important;
+      }
     }
   }
 }

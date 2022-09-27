@@ -13,10 +13,16 @@ const TopNav = props => {
         }
     }, [isLogin])
     const navButtons = isLogin ?
-        <button onClick={() => {
-            helper.logOut()
-            setIsLogin(false)
-        }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar</button> :
+        <>
+            <Link href={'/submit'}>
+                <a className={`${Styles.button_login} ${Styles.clear}`}>Submit data</a>
+            </Link>
+            <button onClick={() => {
+                helper.logOut()
+                setIsLogin(false)
+            }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
+            </button>
+        </> :
         <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
     return <div className={Styles.top_nav}>
         <div className={'frow-container'}>
