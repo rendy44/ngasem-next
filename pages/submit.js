@@ -1,7 +1,21 @@
 import {Footer, Section, TopNav} from "../components/global";
 import {SubmitPenalty} from "../components/form";
+import {useEffect, useState} from "react";
+import {helper} from "../services/helper";
+import {useRouter} from "next/router";
 
-const SubmitPage = props => {
+const SubmitPage = () => {
+    const router = useRouter()
+    const [isLoaded, setIsLoaded] = useState(false)
+    useEffect(() => {
+        if (!isLoaded) {
+            setIsLoaded(true)
+        } else {
+            if (!helper.isLogin()) {
+                router.push('/login')
+            }
+        }
+    }, [isLoaded])
     return <>
         <TopNav/>
         <Section id={'submit'} title={'Laporkan Pelanggaran'} isTitleCenter={true}>
