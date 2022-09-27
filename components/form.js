@@ -334,6 +334,9 @@ const SubmitPenalty = () => {
             <button disabled={errors.score || errors.student || isDisabled}
                     className={Styles.button} type="submit">{buttonLabel}
             </button>
+            <Link href={'/'}>
+                <a className={`${Styles.button} ${Styles.clear}`}>Kembali</a>
+            </Link>
         </div>
     </form> : <Loader/>
 }
