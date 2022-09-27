@@ -4,26 +4,42 @@ import ReactLoading from "react-loading";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {helper} from "../services/helper";
+import MySwal from "sweetalert2";
+import {useRouter} from "next/router";
 
-const TopNav = props => {
+const TopNav = () => {
+    const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
     useEffect(() => {
+        console.log(router.pathname)
         if (!isLogin) {
             setIsLogin(helper.isLogin)
         }
     }, [isLogin])
-    const navButtons = isLogin ?
-        <>
-            <Link href={'/submit'}>
-                <a className={`${Styles.button_login} ${Styles.clear}`}>Submit data</a>
-            </Link>
-            <button onClick={() => {
-                helper.logOut()
-                setIsLogin(false)
-            }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
-            </button>
-        </> :
-        <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
+    let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
+    const logOutButton = <button onClick={() => {
+        MySwal.fire({
+            icon: 'question',
+            text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
+            confirmButtonText: 'Iya, keluar',
+            showCancelButton: true,
+            cancelButtonText: 'Batal'
+        })
+            .then(res => {
+                if (res.isConfirmed) {
+                    helper.logOut()
+                    setIsLogin(false)
+                    if ('/submit' === router.pathname) {
+                        router.push('/login')
+                    }
+                }
+            })
+    }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
+    </button>
+    if (isLogin) {
+        navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
+            className={`${Styles.button_login} ${Styles.clear}`}>Laporkan Pelanggaran</a></Link> {logOutButton}</>
+    }
     return <div className={Styles.top_nav}>
         <div className={'frow-container'}>
             <div className={Styles.button_wrapper}>

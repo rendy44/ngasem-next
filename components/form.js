@@ -13,12 +13,7 @@ import Link from "next/link";
 
 const MySwal = withReactContent(Swal)
 
-const LogOut = props => {
-    return <button className={`${Styles.button} ${Styles.clear}`} onClick={() => {
-        props.callback()
-    }} type={'button'}>Logout</button>
-}
-const Login = (props) => {
+const Login = () => {
     const router = useRouter()
     const [isDisabled, setIsDisabled] = useState(false)
     const {register, handleSubmit, formState: {errors}} = useForm();
@@ -76,7 +71,7 @@ const Login = (props) => {
         </div>
     </form>
 }
-const SubmitPenalty = props => {
+const SubmitPenalty = () => {
     const {register, handleSubmit, formState: {errors}} = useForm()
     const [isLoaded, setIsLoaded] = useState(false)
     const [isBusy, setIsBusy] = useState(false)
@@ -104,12 +99,12 @@ const SubmitPenalty = props => {
             dataService.getCategories()
                 .then(res => {
                     if (res.success) {
-                        setCategories(Object.entries(res.data))
+                        setCategories(Object.entries(res.data.data))
                         setIsLoaded(true)
                     }
                     setIsBusy(false)
                 })
-                .catch(res => {
+                .catch(() => {
                     setIsLoaded(true)
                     setIsBusy(false)
                     MySwal.fire({
@@ -193,7 +188,7 @@ const SubmitPenalty = props => {
                 .then((res) => {
                     if (res.success) {
                         // const objArr = Object.entries(res.data)
-                        setScores(Object.entries(res.data))
+                        setScores(Object.entries(res.data.data))
                         setIsScoreDisabled(false)
                     }
                 })
@@ -222,7 +217,7 @@ const SubmitPenalty = props => {
             dataService.getGradeMajors(currentGrade)
                 .then((res) => {
                     if (res.success) {
-                        setGradeMajors(Object.entries(res.data))
+                        setGradeMajors(Object.entries(res.data.data))
                         setIsMajorDisabled(false)
                     }
                 })
@@ -239,7 +234,7 @@ const SubmitPenalty = props => {
             dataService.getStudents(currentMajor)
                 .then((res) => {
                     if (res.success) {
-                        setStudents(Object.entries(res.data))
+                        setStudents(Object.entries(res.data.data))
                         setIsStudentDisabled(false)
                     }
                 })
@@ -352,4 +347,4 @@ const Search = () => {
         </div>
     </form>
 }
-export {Login, LogOut, SubmitPenalty, Search}
+export {Login, SubmitPenalty, Search}

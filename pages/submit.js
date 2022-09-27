@@ -1,5 +1,6 @@
-import {Footer, Section} from "../components/global";
+import {Footer, Section, TopNav} from "../components/global";
 import {useEffect, useState} from "react";
+import {SubmitPenalty} from "../components/form";
 
 const SubmitPage = props => {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -9,10 +10,16 @@ const SubmitPage = props => {
         }
     }, [isLoaded])
     return <>
-        <Section id={'submit'}>
-            <p>Hallo Gess</p>
+        <TopNav/>
+        <Section id={'submit'} title={'Laporkan Pelanggaran'} isTitleCenter={true}>
+            <div className={'frow'}>
+                <div className={'col-sm-2-3 col-md-1-2'}>
+                    <SubmitPenalty/>
+                </div>
+            </div>
         </Section>
-        <Footer/></>
+        <Footer/>
+    </>
 }
 
 export default SubmitPage
