@@ -1,0 +1,93 @@
+@import "./mainUtil";
+
+.form {
+  //padding: 1rem;
+
+  .fields {
+    .field {
+      padding: 1rem;
+      background-color: darken($white, 4%);
+
+      &:first-child {
+        @include borderTopLeftRadius(.5rem);
+        @include borderTopRightRadius(.5rem);
+      }
+
+      &:last-child {
+        @include borderBottomLeftRadius(.5rem);
+        @include borderBottomRightRadius(.5rem);
+        margin-bottom: 2rem;
+      }
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.button {
+  color: $white;
+  background: $main;
+  padding: 1rem 3rem;
+  border: 1px solid darken($main, 5%);
+  cursor: pointer;
+  width: 100%;
+  @include borderRadius(2rem);
+
+  &:hover, &:active, &:focus {
+    background: lighten($main, 10%);
+    border-color: $main;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: rgba($main, .5);
+    border-color: rgba(darken($main, 5%), .5);
+  }
+
+  &.clear {
+    text-align: center;
+    background-color: transparent !important;
+    border: none !important;
+    color: $default_black;
+  }
+}
+
+.search_form {
+  border: 1px solid $lightestBlack;
+  display: flex;
+  @include borderRadius(2rem);
+  @include defaultTransition;
+
+  input {
+    border-bottom: none !important;
+    padding: .7rem 1.4rem;
+  }
+
+  button[type=submit] {
+    padding: .7rem;
+    font-family: remixicon !important;
+    background: transparent !important;
+    color: rgba($default_black, .5);
+    border: none !important;
+    font-weight: 700;
+    font-size: 1.25rem;
+    @include defaultTransition;
+
+    &:before {
+      content: "\f0d1";
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      @include zoom();
+      color: rgba($default_black, .8);
+    }
+  }
+
+  &:focus-within {
+    @include boxShadow();
+  }
+}

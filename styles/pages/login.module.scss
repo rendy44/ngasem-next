@@ -1,0 +1,63 @@
+@import "../mainUtil";
+
+.login {
+  min-height: calc(100vh - 70px);
+  background-color: $white;
+  //padding-top: 1rem;
+  display: flex;
+  align-items: center;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .illustration {
+      margin-bottom: 1rem;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .form {
+      h1 {
+        margin-bottom: 1.5rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        margin: 0 0 2rem;
+      }
+    }
+  }
+
+  @include breakpoint(768px) {
+    padding-top: 3rem;
+
+    .wrapper {
+      flex-direction: row;
+
+      .illustration {
+        width: 50%;
+      }
+
+      .form {
+        width: 50%;
+      }
+    }
+  }
+
+  @include breakpoint(992px) {
+    .wrapper {
+      .illustration {
+        width: 60%;
+      }
+
+      .form {
+        width: 40%;
+      }
+    }
+  }
+}
