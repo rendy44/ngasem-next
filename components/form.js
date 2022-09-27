@@ -138,7 +138,8 @@ const SubmitPenalty = () => {
             if (result.isConfirmed) {
                 setIsDisabled(true)
                 setButtonLabel('Loading...')
-                penaltyService.send(score, student, description)
+                const secretKey = helper.getKey();
+                penaltyService.send(secretKey, score, student, description)
                     .then((res) => {
                         let notifType = 'error';
                         if (res.success) {
@@ -162,7 +163,7 @@ const SubmitPenalty = () => {
 
                         MySwal.fire({
                             icon: notifType,
-                            html: res.data,
+                            text: res.data.data,
                         })
                         setIsDisabled(false)
                         setButtonLabel('Kirim')

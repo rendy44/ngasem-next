@@ -1,14 +1,7 @@
 import {Footer, Section, TopNav} from "../components/global";
-import {useEffect, useState} from "react";
 import {SubmitPenalty} from "../components/form";
 
 const SubmitPage = props => {
-    const [isLoaded, setIsLoaded] = useState(false)
-    useEffect(() => {
-        if (!isLoaded) {
-
-        }
-    }, [isLoaded])
     return <>
         <TopNav/>
         <Section id={'submit'} title={'Laporkan Pelanggaran'} isTitleCenter={true}>

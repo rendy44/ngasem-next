@@ -1,9 +1,7 @@
 import {fetchWrapper} from "./fetch-wrapper";
-import {helper} from "./helper";
 
-const send = (scoreId, studentId, description = '') => {
-    const myKey = helper.getKey()
-    return fetchWrapper.post('penalty', {key: myKey, score: scoreId, student: studentId, desc: description})
+const send = (secretKey, scoreId, studentId, description = '') => {
+    return fetchWrapper.post('/api/penalty', {key: secretKey, score: scoreId, student: studentId, desc: description})
 }
 
 export const penaltyService = {send}
