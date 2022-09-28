@@ -341,13 +341,35 @@ const SubmitPenalty = () => {
     </form> : <Loader/>
 }
 const Search = () => {
+    const router = useRouter()
+    const [nis, setNis] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const onSubmit = e => {
         e.preventDefault();
+        if (isLoading) {
+            return false;
+        }
+        setIsLoading(true)
+        dataService.searchStudent(nis)
+            .then(res => {
+                if (res.success) {
+                    router.push(`/student/${res.data.data}`)
+                } else {
+                    setIsLoading(false)
+                    MySwal.fire({
+                        title: 'Tidak ditemukan',
+                        text: res.data.data,
+                        icon: 'error',
+                    })
+                }
+            })
     }
     return <form onSubmit={onSubmit}>
         <div className={Styles.search_form}>
-            <input type={'text'} placeholder={'Cari berdasarkan NIS'}/>
-            <button type={'submit'}/>
+            <input onChange={(e) => {
+                setNis(e.target.value)
+            }} type={'text'} placeholder={'Cari berdasarkan NIS'} disabled={isLoading} value={nis}/>
+            <button type={'submit'} disabled={isLoading}/>
         </div>
     </form>
 }

@@ -26,4 +26,19 @@ const submitPenalty = (secretKey, scoreId, studentId, description = '') => {
         desc: description
     }, false)
 }
-export const apiService = {login, getCategories, getScores, getGrades, getStudents, submitPenalty}
+const searchStudent = nis => {
+    return fetchWrapper.get(`search?nis=${nis}`, false)
+}
+const getStudentDetail = nis => {
+    return fetchWrapper.get(`student?nis=${nis}`, false)
+}
+export const apiService = {
+    login,
+    getCategories,
+    getScores,
+    getGrades,
+    getStudents,
+    submitPenalty,
+    searchStudent,
+    getStudentDetail
+}

@@ -59,10 +59,16 @@
   display: flex;
   @include borderRadius(2rem);
   @include defaultTransition;
+  overflow: hidden;
 
   input {
     border-bottom: none !important;
     padding: .7rem 1.4rem;
+    @include defaultTransition;
+
+    &:disabled {
+      background: darken($white, 5%);
+    }
   }
 
   button[type=submit] {
@@ -84,6 +90,10 @@
     &:active {
       @include zoom();
       color: rgba($default_black, .8);
+    }
+
+    &:disabled {
+      background: darken($white, 5%) !important;
     }
   }
 

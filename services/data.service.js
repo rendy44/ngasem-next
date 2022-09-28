@@ -12,4 +12,10 @@ const getGradeMajors = gradeCode => {
 const getStudents = gradeId => {
     return fetchWrapper.get(`/api/students/${gradeId}`)
 }
-export const dataService = {getCategories, getScores, getGradeMajors, getStudents}
+const searchStudent = nis => {
+    return fetchWrapper.get(`/api/search?nis=${nis}`)
+}
+const getStudentDetail = nis => {
+    return fetchWrapper.get(`/api/student/${nis}`)
+}
+export const dataService = {getCategories, getScores, getGradeMajors, getStudents, searchStudent, getStudentDetail}
