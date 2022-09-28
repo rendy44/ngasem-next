@@ -5,8 +5,9 @@ export default function handler(req, res) {
         res.status(405).send({message: 'Only GET requests allowed'})
         return
     }
-    const {nis} = req.query
-    apiService.getStudentDetail(nis)
+
+    const {id} = req.query
+    apiService.getStudentDetail(id)
         .then(data => {
             res.status(data.status).send(data)
         })

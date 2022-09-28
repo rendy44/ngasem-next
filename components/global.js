@@ -11,7 +11,6 @@ const TopNav = () => {
     const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
     useEffect(() => {
-        console.log(router.pathname)
         if (!isLogin) {
             setIsLogin(helper.isLogin)
         }

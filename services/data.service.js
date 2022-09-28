@@ -15,7 +15,7 @@ const getStudents = gradeId => {
 const searchStudent = nis => {
     return fetchWrapper.get(`/api/search?nis=${nis}`)
 }
-const getStudentDetail = nis => {
-    return fetchWrapper.get(`/api/student/${nis}`)
+const getStudentDetail = id => {
+    return fetchWrapper.get(`/api/student/${id}`)
 }
 export const dataService = {getCategories, getScores, getGradeMajors, getStudents, searchStudent, getStudentDetail}

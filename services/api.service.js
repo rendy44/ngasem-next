@@ -29,8 +29,8 @@ const submitPenalty = (secretKey, scoreId, studentId, description = '') => {
 const searchStudent = nis => {
     return fetchWrapper.get(`search?nis=${nis}`, false)
 }
-const getStudentDetail = nis => {
-    return fetchWrapper.get(`student?nis=${nis}`, false)
+const getStudentDetail = id => {
+    return fetchWrapper.get(`student?id=${id}`, false)
 }
 export const apiService = {
     login,

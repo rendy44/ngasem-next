@@ -3,6 +3,7 @@ import {SubmitPenalty} from "../components/form";
 import {useEffect, useState} from "react";
 import {helper} from "../services/helper";
 import {useRouter} from "next/router";
+import Styles from '../styles/pages/submit.module.scss'
 
 const SubmitPage = () => {
     const router = useRouter()
@@ -18,7 +19,7 @@ const SubmitPage = () => {
     }, [isLoaded])
     return <>
         <TopNav/>
-        <Section id={'submit'} title={'Laporkan Pelanggaran'} isTitleCenter={true}>
+        <Section id={'submit'} title={'Laporkan Pelanggaran'} isTitleCenter={true} extraClass={Styles.submit}>
             <div className={'frow'}>
                 <div className={'col-sm-2-3 col-md-1-2'}>
                     <SubmitPenalty/>
