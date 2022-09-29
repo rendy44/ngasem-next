@@ -346,7 +346,7 @@ const Search = () => {
     const [isLoading, setIsLoading] = useState(false)
     const onSubmit = e => {
         e.preventDefault();
-        if (isLoading) {
+        if (isLoading || !nis) {
             return false;
         }
         setIsLoading(true)
