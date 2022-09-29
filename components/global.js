@@ -37,7 +37,7 @@ const TopNav = () => {
     </button>
     if (isLogin) {
         navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
-            className={`${Styles.button_login} ${Styles.clear}`}>Laporkan Pelanggaran</a></Link> {logOutButton}</>
+            className={`${Styles.button_login} ${Styles.clear}`}>Lapor Pelanggaran</a></Link> {logOutButton}</>
     }
     return <div className={Styles.top_nav}>
         <div className={'frow-container'}>

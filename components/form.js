@@ -16,12 +16,15 @@ const MySwal = withReactContent(Swal)
 const Login = () => {
     const router = useRouter()
     const [isDisabled, setIsDisabled] = useState(false)
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit} = useForm();
     const [buttonLabel, setButtonLabel] = useState('Masuk');
     const onSubmit = data => {
+        const {username, password} = data
+        if (!username || !password) {
+            return;
+        }
         setIsDisabled(true)
         setButtonLabel('Loading...')
-        const {username, password} = data
         userService.login(username, password)
             .then(res => {
                 if (res.success) {
@@ -62,7 +65,7 @@ const Login = () => {
             </div>
         </div>
         <div className="frow justify-around">
-            <button disabled={errors.username || errors.password || isDisabled}
+            <button disabled={isDisabled}
                     className={Styles.button} type="submit">{buttonLabel}
             </button>
             <Link href={'/'}>
@@ -72,7 +75,7 @@ const Login = () => {
     </form>
 }
 const SubmitPenalty = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {register, handleSubmit} = useForm()
     const [isLoaded, setIsLoaded] = useState(false)
     const [isBusy, setIsBusy] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
@@ -126,6 +129,9 @@ const SubmitPenalty = () => {
     })
     const onSubmit = data => {
         const {score, student, description} = data
+        if (!score || !student) {
+            return;
+        }
         const currentTeacherName = helper.getName()
         MySwal.fire({
             text: `Dengan melanjutkan, saya ${currentTeacherName} menyatakan secara sadar berhak memberikan pelanggarakn kepada ${selectedStudentName} selaku siswa ${selectedMajorName}.`,
@@ -331,7 +337,7 @@ const SubmitPenalty = () => {
                 Poin: <strong>{selectedScorePoint}</strong>
             </Info> : ''}
         <div className="frow justify-around">
-            <button disabled={errors.score || errors.student || isDisabled}
+            <button disabled={isDisabled}
                     className={Styles.button} type="submit">{buttonLabel}
             </button>
             <Link href={'/'}>
