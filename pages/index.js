@@ -1,6 +1,6 @@
 import {Footer, Section, TopNav} from "../components/global";
 import {Search} from "../components/form";
-import Logo from '../public/logo.jpg'
+import Logo from '../public/icons/logo192.png'
 import Styles from '../styles/pages/index.module.scss'
 import Image from "next/image";
 
