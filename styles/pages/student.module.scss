@@ -21,14 +21,44 @@
     border-bottom: 1px solid $lightestBlack;
 
     .cover {
+      padding: 1rem;
       background-image: url('/hero.jpg');
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
-      height: 100px;
+      height: 120px;
 
-      span {
+      .alt {
         display: none;
+      }
+
+      .back {
+        color: $white;
+        font-weight: 600;
+        font-size: 90%;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+
+        span {
+          font-family: 'remixicon' !important;
+          font-style: normal;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          margin-right: .5rem;
+          @include defaultTransition;
+
+          &:before {
+            content: "\ea60";
+          }
+        }
+
+        &:hover, &:active, &:focus {
+          span {
+            margin-left: .5rem;
+            margin-right: 0;
+          }
+        }
       }
     }
 

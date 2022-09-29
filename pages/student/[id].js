@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Styles from '../../styles/pages/student.module.scss'
 import logoSmk from '../../public/graduating-student.png'
 import Image from "next/image";
+import Link from "next/link";
 
 const StudentDetailPage = () => {
     const router = useRouter();
@@ -31,7 +32,10 @@ const StudentDetailPage = () => {
             <div className={'col-md-2-3'}>
                 <div className={Styles.hero}>
                     <div className={Styles.cover}>
-                        <span>Photo by iam_os on Unsplash</span>
+                        <Link href={'/'}>
+                            <a className={Styles.back}><span></span> Kembali</a>
+                        </Link>
+                        <span className={Styles.alt}>Photo by iam_os on Unsplash</span>
                     </div>
                     <div className={Styles.profile}>
                         <div className={Styles.profile_image}>
@@ -59,7 +63,7 @@ const StudentDetailPage = () => {
                             <span id="grade">{data.grade}</span>
                         </div>
                         {parseInt(data.point) > 0 ? <div className={Styles.detail_item}>
-                            <label htmlFor="point">Poin terkumpul</label>
+                            <label htmlFor="point">Poin terakumulasi</label>
                             <span id="point">{data.point} poin</span>
                         </div> : <></>}
                     </div>
