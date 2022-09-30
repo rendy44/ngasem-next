@@ -38,6 +38,17 @@ function MyApp({Component, pageProps}) {
                                 })
                         }
                     })
+                    .catch(() => {
+                        MySwal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Pastikan perangkat terhubung ke jaringan, silahkan coba lagi'
+                        })
+                            .then(() => {
+                                helper.logOut()
+                                router.push('/login')
+                            })
+                    })
             }
         }
     }, [])

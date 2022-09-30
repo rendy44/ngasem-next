@@ -19,6 +19,7 @@ const TopNav = () => {
     const logOutButton = <button onClick={() => {
         MySwal.fire({
             icon: 'question',
+            title: 'Konfirmasi',
             text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
             confirmButtonText: 'Iya, keluar',
             showCancelButton: true,

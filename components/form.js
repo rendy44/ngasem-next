@@ -38,7 +38,8 @@ const Login = () => {
                 } else {
                     MySwal.fire({
                         icon: "error",
-                        html: res.data.data,
+                        title: 'Terjadi Kesalahan',
+                        text: res.data.data,
                     })
                     setButtonLabel('Masuk')
                     setIsDisabled(false)
@@ -49,7 +50,8 @@ const Login = () => {
                 setButtonLabel('Masuk')
                 MySwal.fire({
                     icon: 'error',
-                    text: 'Terjadi kesalahan, pastikan perangkat terhubung ke jaringan.'
+                    title: 'Terjadi Kesalahan',
+                    text: 'Pastikan perangkat terhubung ke jaringan.'
                 })
             })
     }
@@ -365,7 +367,7 @@ const Search = () => {
                 } else {
                     setIsLoading(false)
                     MySwal.fire({
-                        title: 'Tidak ditemukan',
+                        title: 'Tidak Ditemukan',
                         text: res.data.data,
                         icon: 'error',
                     })
