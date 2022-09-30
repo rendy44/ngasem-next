@@ -1,6 +1,7 @@
 $white: #fff !default;
 $black: #000 !default;
 $default_black: lighten($black, 20%) !default;
+$default_black_dark: darken($white, 20%) !default;
 $light: darken($white, 2.5%) !default;
 $dark: lighten($black, 30%) !default;
 $main: #336577 !default;

@@ -5,4 +5,8 @@
 
 html, body {
   font-family: 'Quicksand', sans-serif;
+  @media (prefers-color-scheme: dark) {
+    background: lighten($black, 12.5%);
+    color: $default_black_dark;
+  }
 }

@@ -21,8 +21,8 @@
       @include defaultTransition;
 
       &:hover, &:active, &:focus {
-        background: darken($main, 5%);
-        border-color: darken($main, 10%);
+        background: lighten($main, 5%);
+        border-color: $main;
       }
 
       &.logout {
@@ -96,5 +96,24 @@ p.info {
       font-size: 80%;
       margin: 0 !important;
     }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .top_nav {
+    .button_wrapper {
+      .button_login {
+        background: darken($main, 10%);
+        border-color: darken($main, 15%);
+        color: $default_black_dark;
+        &:hover, &:active, &:focus {
+          background: darken($main, 5%);
+          border-color: darken($main, 10%);
+        }
+      }
+    }
+  }
+  .footer {
+    background: lighten($black, 8%);
   }
 }

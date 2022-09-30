@@ -13,9 +13,8 @@
 
   img {
     max-width: 100px;
+    @media (prefers-color-scheme: dark) {
+      filter: grayscale(85%);
+    }
   }
-}
-
-.search_form {
-
 }

@@ -101,3 +101,31 @@
     @include boxShadow();
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .search_form {
+    input {
+      background: lighten($black, 17.5%);
+      color: $default_black_dark;
+
+      &:disabled {
+        background: lighten($black, 17.5%);
+      }
+    }
+
+    button[type=submit] {
+      background: lighten($black, 17.5%) !important;
+      color: rgba($default_black_dark, .5);
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: rgba($default_black_dark, .8);
+      }
+
+      &:disabled {
+        background: lighten($black, 17.5%) !important;
+      }
+    }
+  }
+}
