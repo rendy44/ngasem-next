@@ -32,6 +32,9 @@ const searchStudent = nis => {
 const getStudentDetail = id => {
     return fetchWrapper.get(`student?id=${id}`, false)
 }
+const getAccountDetail = key => {
+    return fetchWrapper.get(`account?key=${key}`, false)
+}
 export const apiService = {
     login,
     getCategories,
@@ -40,5 +43,6 @@ export const apiService = {
     getStudents,
     submitPenalty,
     searchStudent,
-    getStudentDetail
+    getStudentDetail,
+    getAccountDetail,
 }

@@ -28,8 +28,10 @@ const Login = () => {
         userService.login(username, password)
             .then(res => {
                 if (res.success) {
-                    helper.setKey(res.data.data.key)
-                    helper.setName(res.data.data.name)
+                    const {key, name, avatar} = res.data.data
+                    helper.setKey(key)
+                    helper.setName(name)
+                    helper.setAvatar(avatar)
 
                     // Reload to the panel route.
                     router.push('/submit')

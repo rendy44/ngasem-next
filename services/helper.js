@@ -9,16 +9,23 @@ const getName = () => {
 const getKey = () => {
     return ReactSession.get('key');
 }
+const getAvatar = () => {
+    return ReactSession.get('avatar')
+}
 const setKey = (key) => {
     ReactSession.set('key', key);
 }
 const setName = (name) => {
     ReactSession.set('name', name);
 }
+const setAvatar = avatar => {
+    ReactSession.set('avatar', avatar)
+}
 const logOut = () => {
     setKey('')
     setName('')
+    setAvatar('')
 }
 export const helper = {
-    isLogin, getName, getKey, setName, setKey, logOut
+    isLogin, getName, getKey, getAvatar, setName, setKey, setAvatar, logOut
 }
