@@ -25,26 +25,6 @@ const TopNav = () => {
         }
     }, [isLogin])
     let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
-    // const logOutButton = <button onClick={() => {
-    //     MySwal.fire({
-    //         icon: 'question',
-    //         title: 'Konfirmasi',
-    //         text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
-    //         confirmButtonText: 'Iya, keluar',
-    //         showCancelButton: true,
-    //         cancelButtonText: 'Batal'
-    //     })
-    //         .then(res => {
-    //             if (res.isConfirmed) {
-    //                 helper.logOut()
-    //                 setIsLogin(false)
-    //                 if ('/submit' === router.pathname) {
-    //                     router.push('/login')
-    //                 }
-    //             }
-    //         })
-    // }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
-    // </button>
 
     const simpleStyle = {
         backgroundImage: `url(${avatar})`,
