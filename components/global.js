@@ -6,36 +6,101 @@ import {useEffect, useState} from "react";
 import {helper} from "../services/helper";
 import MySwal from "sweetalert2";
 import {useRouter} from "next/router";
+import Image from "next/image";
 
 const TopNav = () => {
     const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
+    const [name, setName] = useState('')
+    const [avatar, setAvatar] = useState('')
+    const [username, setUsername] = useState('')
+    const [isNavOpen, setIsNavOpen] = useState(false)
     useEffect(() => {
         if (!isLogin) {
             setIsLogin(helper.isLogin)
+        } else {
+            setName(helper.getName)
+            setAvatar(helper.getAvatar)
+            setUsername(helper.getUserName)
         }
     }, [isLogin])
     let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
-    const logOutButton = <button onClick={() => {
-        MySwal.fire({
-            icon: 'question',
-            title: 'Konfirmasi',
-            text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
-            confirmButtonText: 'Iya, keluar',
-            showCancelButton: true,
-            cancelButtonText: 'Batal'
-        })
-            .then(res => {
-                if (res.isConfirmed) {
-                    helper.logOut()
-                    setIsLogin(false)
-                    if ('/submit' === router.pathname) {
-                        router.push('/login')
-                    }
-                }
-            })
-    }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
-    </button>
+    // const logOutButton = <button onClick={() => {
+    //     MySwal.fire({
+    //         icon: 'question',
+    //         title: 'Konfirmasi',
+    //         text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
+    //         confirmButtonText: 'Iya, keluar',
+    //         showCancelButton: true,
+    //         cancelButtonText: 'Batal'
+    //     })
+    //         .then(res => {
+    //             if (res.isConfirmed) {
+    //                 helper.logOut()
+    //                 setIsLogin(false)
+    //                 if ('/submit' === router.pathname) {
+    //                     router.push('/login')
+    //                 }
+    //             }
+    //         })
+    // }} className={`${Styles.button_login} ${Styles.logout}`}>Keluar
+    // </button>
+
+    const simpleStyle = {
+        backgroundImage: `url(${avatar})`,
+    }
+    const logOutButton = <div className={isNavOpen ? Styles.nav_wrapper : `${Styles.nav_wrapper} ${Styles.nav_close}`}>
+        <div className={Styles.profile_info} style={simpleStyle}>
+            <button onClick={(e) => {
+                e.preventDefault();
+                setIsNavOpen(!isNavOpen)
+            }}></button>
+        </div>
+        <div className={Styles.nav_box}>
+            <div className={Styles.nav_profile_wrapper}>
+                <div className={Styles.nav_profile} style={simpleStyle}></div>
+                <p>{name}
+                    <span>@{username}</span>
+                </p>
+            </div>
+            <div className={Styles.nav_list}>
+                <ul>
+                    <li>
+                        <Link href={'/account'}>
+                            <a>Profil</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={'/account/setting'}>
+                            <a>Pengaturan</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <button onClick={() => {
+                            MySwal.fire({
+                                icon: 'question',
+                                title: 'Konfirmasi',
+                                text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
+                                confirmButtonText: 'Iya, keluar',
+                                showCancelButton: true,
+                                cancelButtonText: 'Batal'
+                            })
+                                .then(res => {
+                                    if (res.isConfirmed) {
+                                        helper.logOut()
+                                        setIsLogin(false)
+                                        if ('/submit' === router.pathname) {
+                                            router.push('/login')
+                                        }
+                                    }
+                                })
+                        }}>Keluar
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     if (isLogin) {
         navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
             className={`${Styles.button_login} ${Styles.clear}`}>Lapor Pelanggaran</a></Link> {logOutButton}</>

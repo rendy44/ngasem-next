@@ -22,10 +22,11 @@ function MyApp({Component, pageProps}) {
                 userService.detail(secretKey)
                     .then(res => {
                         if (res.success) {
-                            const {key, name, avatar} = res.data.data;
+                            const {key, name, avatar, username} = res.data.data;
                             helper.setKey(key)
                             helper.setName(name)
                             helper.setAvatar(avatar)
+                            helper.setUserName(username)
                             setIsLoaded(true)
                         } else {
                             MySwal.fire({
