@@ -1,7 +1,7 @@
 @import "../mainUtil";
 
 .login {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px - 50px);
   background-color: $white;
   //padding-top: 1rem;
   display: flex;

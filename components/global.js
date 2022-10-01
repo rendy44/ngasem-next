@@ -41,7 +41,8 @@ const TopNav = () => {
     const simpleStyle = {
         backgroundImage: `url(${avatar})`,
     }
-    const navButtons = !isLogin ? <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link> :
+    const navButtons = !isLogin ? ('/login' !== router.pathname ?
+            <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link> : <></>) :
         <div className={isNavOpen ? Styles.nav_wrapper : `${Styles.nav_wrapper} ${Styles.nav_close}`}>
             <div className={Styles.profile_nav_wrapper}>
                 <div className={Styles.profile_info} style={simpleStyle}/>

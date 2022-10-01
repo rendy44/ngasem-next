@@ -59,12 +59,12 @@ const Login = () => {
     return <form onSubmit={handleSubmit(onSubmit)} className={Styles.form}>
         <div className={Styles.fields}>
             <div className={Styles.field}>
-                <label>Username
+                <label>Nama Pengguna
                     <input type="text" {...register("username", {required: true})}/>
                 </label>
             </div>
             <div className={Styles.field}>
-                <label>Password
+                <label>Kata Sandi
                     <input type="password" {...register("password", {required: true})}/>
                 </label>
             </div>
@@ -73,9 +73,6 @@ const Login = () => {
             <button disabled={isDisabled}
                     className={Styles.button} type="submit">{buttonLabel}
             </button>
-            <Link href={'/'}>
-                <a className={`${Styles.button} ${Styles.clear}`}>Kembali</a>
-            </Link>
         </div>
     </form>
 }
