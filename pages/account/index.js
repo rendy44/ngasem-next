@@ -1,12 +1,8 @@
-import {Footer, Section, TopNav} from "../../components/global";
+import {PanelPage} from "../../components/account";
 
 const AccountPage = () => {
-    return <>
-        <TopNav/>
-        <Section id={'account'}>
-            <p>Hello there</p>
-        </Section>
-        <Footer/>
-    </>
+    return <PanelPage title={'Profil'}>
+        <p>Hallo Juragan</p>
+    </PanelPage>
 }
 export default AccountPage

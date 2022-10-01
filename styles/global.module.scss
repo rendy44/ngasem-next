@@ -19,6 +19,15 @@
         .link_home {
           display: flex;
           align-items: center;
+          text-decoration: none;
+
+          .logo_name {
+            margin-left: .1rem;
+            padding-left: .25rem;
+            border-left: 1px solid $lightestBlack;
+            font-size: 75%;
+            font-weight: 500;
+          }
         }
       }
 
@@ -57,30 +66,52 @@
         .nav_wrapper {
           position: relative;
 
-          .profile_info {
-            width: 32px;
-            height: 32px;
-            background-size: contain;
+          .profile_nav_wrapper {
+            display: flex;
+            align-items: center;
+            background: darken($white, 5%);
+            @include borderRadius(2rem);
+            padding: .3rem .5rem .3rem .3rem;
             border: 1px solid $lightestBlack;
-            @include borderRadius(1.5rem);
-            @include defaultTransition;
-            box-shadow: none;
 
-            button {
-              width: 100%;
-              height: 100%;
+            .profile_info {
+              width: 24px;
+              height: 24px;
+              background-size: cover;
+              border: 1px solid $lightestBlack;
+              @include borderRadius(1.5rem);
+              @include defaultTransition;
+              margin-right: .5rem;
+            }
+
+            .profile_name {
+              font-size: 90%;
               background: transparent;
               border: none;
+              color: $default_black;
+              padding: 0;
+              line-height: 1;
+              cursor: pointer;
+              font-weight: 600;
+              //text-transform: capitalize;
+              display: inline-flex;
+              align-items: center;
+
+              &:after {
+                padding-left: .25rem;
+                font-family: 'remixicon' !important;
+                content: "\ea4e";
+              }
             }
           }
 
           .nav_box {
             border: 1px solid $lightestBlack;
             position: absolute;
-            top: calc(32px + .25rem);
+            top: calc(35px + .25rem);
             right: 0;
             width: 250px;
-            height: 270px;
+            //height: 270px;
             background: $white;
             z-index: 1000;
             overflow: hidden;
@@ -121,10 +152,6 @@
 
             .nav_list {
               padding: 1rem;
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              right: 0;
 
               ul {
                 background: $white;
@@ -138,6 +165,15 @@
                   a {
                     font-size: 90%;
                     text-decoration: none;
+                    display: block;
+                    font-weight: 500;
+
+                    span {
+                      font-weight: 300;
+                      display: block;
+                      font-size: 80%;
+                      color: lighten($default_black, 30%);
+                    }
                   }
 
                   &:last-child {
@@ -145,7 +181,8 @@
                     padding-top: .5rem;
                     margin-bottom: 0;
 
-                    button {
+                    span {
+                      cursor: pointer;
                       background: transparent;
                       border: none;
                       padding: 0;
@@ -160,12 +197,13 @@
 
           &.nav_close {
             .profile_info {
-              @include boxShadow;
+              //@include boxShadow;
             }
 
             .nav_box {
-              width: 0;
-              height: 0;
+              display: none;
+              //width: 0;
+              //height: 0;
             }
           }
         }

@@ -35,7 +35,7 @@ const Login = () => {
                     helper.setUserName(username)
 
                     // Reload to the panel route.
-                    router.push('/submit')
+                    router.push('/account/submit')
                 } else {
                     MySwal.fire({
                         icon: "error",

@@ -1,12 +1,7 @@
-import {Footer, Section, TopNav} from "../../components/global";
+import {PanelPage} from "../../components/account";
 
 const SettingPage = () => {
-    return <>
-        <TopNav/>
-        <Section id={'setting'}>
-            <p>Hello there, setting</p>
-        </Section>
-        <Footer/>
-    </>
+    return <PanelPage title={'Pengaturan'}>
+    </PanelPage>
 }
 export default SettingPage

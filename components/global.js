@@ -37,74 +37,77 @@ const TopNav = () => {
             window.removeEventListener('scroll', stickyNavbar);
         };
     }, [isLogin])
-    let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
 
     const simpleStyle = {
         backgroundImage: `url(${avatar})`,
     }
-    const logOutButton = <div className={isNavOpen ? Styles.nav_wrapper : `${Styles.nav_wrapper} ${Styles.nav_close}`}>
-        <div className={Styles.profile_info} style={simpleStyle}>
-            <button onClick={(e) => {
-                e.preventDefault();
-                setIsNavOpen(!isNavOpen)
-            }}></button>
-        </div>
-        <div className={Styles.nav_box}>
-            <div className={Styles.nav_profile_wrapper}>
-                <div className={Styles.nav_profile} style={simpleStyle}></div>
-                <p>{name}
-                    <span>@{username}</span>
-                </p>
+    const navButtons = !isLogin ? <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link> :
+        <div className={isNavOpen ? Styles.nav_wrapper : `${Styles.nav_wrapper} ${Styles.nav_close}`}>
+            <div className={Styles.profile_nav_wrapper}>
+                <div className={Styles.profile_info} style={simpleStyle}/>
+                <span className={Styles.profile_name} onClick={(e) => {
+                    e.preventDefault();
+                    setIsNavOpen(!isNavOpen)
+                }}>{username}</span>
             </div>
-            <div className={Styles.nav_list}>
-                <ul>
-                    <li>
-                        <Link href={'/account'}>
-                            <a>Profil</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={'/account/setting'}>
-                            <a>Pengaturan</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <button onClick={() => {
-                            MySwal.fire({
-                                icon: 'question',
-                                title: 'Konfirmasi',
-                                text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
-                                confirmButtonText: 'Iya, keluar',
-                                showCancelButton: true,
-                                cancelButtonText: 'Batal'
-                            })
-                                .then(res => {
-                                    if (res.isConfirmed) {
-                                        helper.logOut()
-                                        setIsLogin(false)
-                                        if ('/submit' === router.pathname) {
+            <div className={Styles.nav_box}>
+                <div className={Styles.nav_profile_wrapper}>
+                    <div className={Styles.nav_profile} style={simpleStyle}></div>
+                    <p>{name}
+                        <span>@{username}</span>
+                    </p>
+                </div>
+                <div className={Styles.nav_list}>
+                    <ul>
+                        <li>
+                            <Link href={'/account/submit'}>
+                                <a>Catat<span>Catat dan laporkan pelanggaran siswa</span></a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/account'}>
+                                <a>Profil<span>Lihat detail profil and pelanggaran yang sudah tercatat</span></a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/account/setting'}>
+                                <a>Pengaturan<span>Perbaharui profil dan kata sandi</span></a>
+                            </Link>
+                        </li>
+                        <li>
+                            <span onClick={() => {
+                                MySwal.fire({
+                                    icon: 'question',
+                                    title: 'Konfirmasi',
+                                    text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
+                                    confirmButtonText: 'Iya, keluar',
+                                    showCancelButton: true,
+                                    cancelButtonText: 'Batal'
+                                })
+                                    .then(res => {
+                                        if (res.isConfirmed) {
+                                            helper.logOut()
+                                            setIsLogin(false)
                                             router.push('/login')
                                         }
-                                    }
-                                })
-                        }}>Keluar
-                        </button>
-                    </li>
-                </ul>
+                                    })
+                            }}>Keluar
+                            </span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    if (isLogin) {
-        navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
-            className={`${Styles.button_login} ${Styles.clear}`}>Laporkan Pelanggaran</a></Link> {logOutButton}</>
-    }
     return <div className={Styles.top_nav_wrapper}>
         <div className={isSticky ? `${Styles.top_nav} ${Styles.sticky}` : Styles.top_nav}>
             <div className={'frow-container'}>
                 <div className={Styles.cols_wrapper}>
                     <div className={Styles.logo_wrapper}>
                         {'/' !== router.pathname ? <Link href={'/'}>
-                            <a className={Styles.link_home}><Image src={Logo} width={32} height={32}/></a>
+                            <a className={Styles.link_home}>
+                                <Image src={Logo} width={32} height={32}/>
+                                <span className={Styles.logo_name}>SMK Negeri<br/>Ngasem</span>
+                            </a>
                         </Link> : <></>}
                     </div>
                     <div className={Styles.button_wrapper}>
