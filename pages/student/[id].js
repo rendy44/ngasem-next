@@ -1,4 +1,4 @@
-import {Footer, Loader, Section} from "../../components/global";
+import {Footer, Loader, Section, TopNav} from "../../components/global";
 import {dataService} from "../../services/data.service";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";

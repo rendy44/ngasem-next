@@ -7,6 +7,7 @@ import {helper} from "../services/helper";
 import MySwal from "sweetalert2";
 import {useRouter} from "next/router";
 import Image from "next/image";
+import Logo from '../public/icons/logo192.png'
 
 const TopNav = () => {
     const router = useRouter()
@@ -15,6 +16,13 @@ const TopNav = () => {
     const [avatar, setAvatar] = useState('')
     const [username, setUsername] = useState('')
     const [isNavOpen, setIsNavOpen] = useState(false)
+    const [isSticky, setIsSticky] = useState(false)
+    const stickyNavbar = () => {
+        if (window !== undefined) {
+            let windowHeight = window.scrollY
+            setIsSticky(windowHeight > 80)
+        }
+    }
     useEffect(() => {
         if (!isLogin) {
             setIsLogin(helper.isLogin)
@@ -23,6 +31,11 @@ const TopNav = () => {
             setAvatar(helper.getAvatar)
             setUsername(helper.getUserName)
         }
+        window.addEventListener('scroll', stickyNavbar);
+
+        return () => {
+            window.removeEventListener('scroll', stickyNavbar);
+        };
     }, [isLogin])
     let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
 
@@ -83,12 +96,21 @@ const TopNav = () => {
     </div>
     if (isLogin) {
         navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
-            className={`${Styles.button_login} ${Styles.clear}`}>Lapor Pelanggaran</a></Link> {logOutButton}</>
+            className={`${Styles.button_login} ${Styles.clear}`}>Laporkan Pelanggaran</a></Link> {logOutButton}</>
     }
-    return <div className={Styles.top_nav}>
-        <div className={'frow-container'}>
-            <div className={Styles.button_wrapper}>
-                {navButtons}
+    return <div className={Styles.top_nav_wrapper}>
+        <div className={isSticky ? `${Styles.top_nav} ${Styles.sticky}` : Styles.top_nav}>
+            <div className={'frow-container'}>
+                <div className={Styles.cols_wrapper}>
+                    <div className={Styles.logo_wrapper}>
+                        {'/' !== router.pathname ? <Link href={'/'}>
+                            <a className={Styles.link_home}><Image src={Logo} width={32} height={32}/></a>
+                        </Link> : <></>}
+                    </div>
+                    <div className={Styles.button_wrapper}>
+                        {navButtons}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
