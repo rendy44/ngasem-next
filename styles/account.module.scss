@@ -4,14 +4,16 @@
   min-height: calc(100vh - 50px - 70px);
 
   h2 {
-    margin-bottom: 1rem !important;
+    margin-bottom: 2rem !important;
+    text-align: center;
   }
 
   .side_wrapper {
-    background: darken($white, 5%);
-    border: 1px solid $lightestBlack;
-    @include defaultBorderRadius;
-    margin-bottom: 1rem;
+    //background: darken($white, 5%);
+    //border: 1px solid $lightestBlack;
+    //@include defaultBorderRadius;
+    //margin-bottom: 1rem;
+    display: none;
 
     ul {
       padding: 0;

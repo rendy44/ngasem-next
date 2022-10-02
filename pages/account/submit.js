@@ -17,7 +17,7 @@ const SubmitPage = () => {
             }
         }
     }, [isLoaded])
-    return <PanelPage title={'Laporkan Pelanggaran'}>
+    return <PanelPage title={'Catat Pelanggaran'}>
         <SubmitPenalty/>
     </PanelPage>
 }

@@ -342,9 +342,9 @@ const SubmitPenalty = () => {
             <button disabled={isDisabled}
                     className={Styles.button} type="submit">{buttonLabel}
             </button>
-            <Link href={'/'}>
-                <a className={`${Styles.button} ${Styles.clear}`}>Kembali</a>
-            </Link>
+            {/*<Link href={'/'}>*/}
+            {/*    <a className={`${Styles.button} ${Styles.clear}`}>Kembali</a>*/}
+            {/*</Link>*/}
         </div>
     </form> : <Loader/>
 }

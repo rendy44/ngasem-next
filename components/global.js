@@ -37,7 +37,6 @@ const TopNav = () => {
             window.removeEventListener('scroll', stickyNavbar);
         };
     }, [isLogin])
-
     const simpleStyle = {
         backgroundImage: `url(${avatar})`,
     }
@@ -54,9 +53,11 @@ const TopNav = () => {
             <div className={Styles.nav_box}>
                 <div className={Styles.nav_profile_wrapper}>
                     <div className={Styles.nav_profile} style={simpleStyle}></div>
-                    <p>{name}
-                        <span>@{username}</span>
-                    </p>
+                    <Link href={'/account'}>
+                        <p>{name}
+                            <span>@{username}</span>
+                        </p>
+                    </Link>
                 </div>
                 <div className={Styles.nav_list}>
                     <ul>
@@ -117,6 +118,9 @@ const TopNav = () => {
                 </div>
             </div>
         </div>
+        {isLogin && '/account/submit' !== router.pathname ?
+            <div className={Styles.float_bottom}><Link href={'/account/submit'}><a
+                className={Styles.block_a}></a></Link></div> : <></>}
     </div>
 }
 const Section = (props) => {

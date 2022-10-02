@@ -115,11 +115,3 @@
   // font-family: 'Amiri', serif;
   font-family: 'UthmanTahaNaskh', serif;
 }
-
-@mixin rotate($val) {
-  transform: rotate($val);
-  -moz-transform: rotate($val);
-  -ms-transform: rotate($val);
-  -o-transform: rotate($val);
-  -webkit-transform: rotate($val);
-}
