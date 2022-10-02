@@ -9,7 +9,7 @@ import {useRouter} from "next/router";
 import Image from "next/image";
 import Logo from '../public/icons/logo192.png'
 
-const TopNav = () => {
+const TopNav = props => {
     const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
     const [name, setName] = useState('')
@@ -55,17 +55,12 @@ const TopNav = () => {
                     <div className={Styles.nav_profile} style={simpleStyle}></div>
                     <Link href={'/account'}>
                         <p>{name}
-                            <span>@{username}</span>
+                            {/*<span>@{username}</span>*/}
                         </p>
                     </Link>
                 </div>
                 <div className={Styles.nav_list}>
                     <ul>
-                        <li>
-                            <Link href={'/account/submit'}>
-                                <a>Catat<span>Catat dan laporkan pelanggaran siswa</span></a>
-                            </Link>
-                        </li>
                         <li>
                             <Link href={'/account'}>
                                 <a>Profil<span>Lihat detail profil and pelanggaran yang sudah tercatat</span></a>
@@ -118,7 +113,7 @@ const TopNav = () => {
                 </div>
             </div>
         </div>
-        {isLogin && '/account/submit' !== router.pathname ?
+        {isLogin && !props.noAddButton ?
             <div className={Styles.float_bottom}><Link href={'/account/submit'}><a
                 className={Styles.block_a}></a></Link></div> : <></>}
     </div>
@@ -164,7 +159,9 @@ const Loader = () => {
         <ReactLoading type={'spokes'} color={'#773377'} height={64} width={64}/>
     </div>
 }
-
+TopNav.propTypes = {
+    noAddButton: PropTypes.bool
+}
 Section.propTypes = {
     id: PropTypes.string.isRequired,
     extraClass: PropTypes.string,

@@ -32,9 +32,9 @@ const StudentDetailPage = () => {
             <div className={'col-md-2-3'}>
                 <div className={Styles.hero}>
                     <div className={Styles.cover}>
-                        <Link href={'/'}>
-                            <a className={Styles.back}><span></span> Kembali</a>
-                        </Link>
+                        {/*<Link href={'/'}>*/}
+                        {/*    <a className={Styles.back}><span></span> Kembali</a>*/}
+                        {/*</Link>*/}
                         <span className={Styles.alt}>Photo by iam_os on Unsplash</span>
                     </div>
                     <div className={Styles.profile}>
@@ -96,6 +96,7 @@ const StudentDetailPage = () => {
     </div> : <Loader/>
     return (
         <>
+            <TopNav noAddButton={true}/>
             <Section id={'studentDetail'} extraClass={isLoaded ? `${Styles.student} ${Styles.loaded}` : Styles.student}>
                 {studentContent}
             </Section>

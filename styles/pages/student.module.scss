@@ -3,7 +3,7 @@
 .student {
   background: darken($white, 5%);
   //min-height: calc(100vh - 50px - 70px);
-  min-height: 100vh;
+  min-height: calc(100vh - 50px - 70px);
   display: flex;
   align-items: center;
   padding: 0 !important;
@@ -26,39 +26,10 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
-      height: 120px;
+      height: 100px;
 
       .alt {
         display: none;
-      }
-
-      .back {
-        color: $white;
-        font-weight: 600;
-        font-size: 90%;
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-
-        span {
-          font-family: 'remixicon' !important;
-          font-style: normal;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          margin-right: .5rem;
-          @include defaultTransition;
-
-          &:before {
-            content: "\ea60";
-          }
-        }
-
-        &:hover, &:active, &:focus {
-          span {
-            margin-left: .5rem;
-            margin-right: 0;
-          }
-        }
       }
     }
 

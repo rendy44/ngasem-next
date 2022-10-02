@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const PanelPage = props => {
     return <>
-        <TopNav/>
+        <TopNav noAddButton={props.noAddButton}/>
         <Section id={'account_panel'} title={props.title} extraClass={Styles.account_panel}>
             <div className={'frow'}>
                 <div className={'col-sm-1-3'}>
@@ -40,6 +40,7 @@ const PanelPage = props => {
     </>
 }
 PanelPage.propTypes = {
+    noAddButton: PropTypes.bool,
     title: PropTypes.string.isRequired
 }
 export {PanelPage}

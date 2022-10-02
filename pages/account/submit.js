@@ -17,7 +17,7 @@ const SubmitPage = () => {
             }
         }
     }, [isLoaded])
-    return <PanelPage title={'Catat Pelanggaran'}>
+    return <PanelPage title={'Catat Pelanggaran'} noAddButton={true}>
         <SubmitPenalty/>
     </PanelPage>
 }
