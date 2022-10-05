@@ -9,14 +9,14 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import {Info, Loader} from "./global";
 import {penaltyService} from "../services/penalty.service";
-import Link from "next/link";
-import {Button, Flex, Input, useToast} from "@chakra-ui/react";
-import {RiSearchLine} from "react-icons/ri";
+import {Box, Button, Flex, Icon, Input, InputGroup, InputLeftElement, useToast} from "@chakra-ui/react";
+import {RiLockPasswordLine, RiSearchLine, RiUser3Line} from "react-icons/ri";
 
 const MySwal = withReactContent(Swal)
 
 const Login = () => {
     const router = useRouter()
+    const toast = useToast()
     const [isDisabled, setIsDisabled] = useState(false)
     const {register, handleSubmit} = useForm();
     const [buttonLabel, setButtonLabel] = useState('Masuk');
@@ -39,10 +39,13 @@ const Login = () => {
                     // Reload to the panel route.
                     router.push('/account/submit')
                 } else {
-                    MySwal.fire({
-                        icon: "error",
-                        title: 'Terjadi Kesalahan',
-                        text: res.data.data,
+                    toast({
+                        title: 'Terjadi kesalahan',
+                        description: res.data.data,
+                        status: 'warning',
+                        position: 'top-right',
+                        duration: 5000,
+                        isClosable: true,
                     })
                     setButtonLabel('Masuk')
                     setIsDisabled(false)
@@ -51,31 +54,38 @@ const Login = () => {
             .catch(() => {
                 setIsDisabled(false)
                 setButtonLabel('Masuk')
-                MySwal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    text: 'Pastikan perangkat terhubung ke jaringan.'
+                toast({
+                    title: 'Terjadi kesalahan',
+                    description: 'Pastikan perangkat terhubung ke jaringan.',
+                    status: 'error',
+                    position: 'top-right',
+                    duration: 5000,
+                    isClosable: true,
                 })
             })
     }
     return <form onSubmit={handleSubmit(onSubmit)} className={Styles.form}>
-        <div className={Styles.fields}>
-            <div className={Styles.field}>
-                <label>Nama Pengguna
-                    <input type="text" {...register("username", {required: true})}/>
-                </label>
-            </div>
-            <div className={Styles.field}>
-                <label>Kata Sandi
-                    <input type="password" {...register("password", {required: true})}/>
-                </label>
-            </div>
-        </div>
-        <div className="frow justify-around">
-            <button disabled={isDisabled}
-                    className={Styles.button} type="submit">{buttonLabel}
-            </button>
-        </div>
+        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'md'}>
+            <InputGroup>
+                <InputLeftElement
+                    pointerEvents='none'
+                    children={<Icon as={RiUser3Line} color='blackAlpha.700'/>}
+                />
+                <Input variant={'flushed'} placeholder={'Nama pengguna'} {...register("username", {required: true})}/>
+            </InputGroup>
+            <InputGroup>
+                <InputLeftElement
+                    pointerEvents='none'
+                    children={<Icon as={RiLockPasswordLine} color='blackAlpha.700'/>}
+                />
+                <Input type={'password'} variant={'flushed'}
+                       placeholder={'Kata sandi'} {...register("password", {required: true})}/>
+            </InputGroup>
+        </Box>
+        <Box>
+            <Button isLoading={isDisabled} disabled={isDisabled} type="submit" colorScheme={'teal'}
+                    w={'100%'}>{buttonLabel}</Button>
+        </Box>
     </form>
 }
 const SubmitPenalty = () => {

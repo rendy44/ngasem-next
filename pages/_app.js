@@ -1,4 +1,4 @@
-import '../styles/globals.scss'
+// import '../styles/globals.scss'
 import {ReactSession} from "react-client-session";
 import Head from "next/head"
 import {useEffect, useState} from "react";
