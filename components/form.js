@@ -10,6 +10,8 @@ import withReactContent from 'sweetalert2-react-content';
 import {Info, Loader} from "./global";
 import {penaltyService} from "../services/penalty.service";
 import Link from "next/link";
+import {Button, Flex, Input, useToast} from "@chakra-ui/react";
+import {RiSearchLine} from "react-icons/ri";
 
 const MySwal = withReactContent(Swal)
 
@@ -350,6 +352,7 @@ const SubmitPenalty = () => {
 }
 const Search = () => {
     const router = useRouter()
+    const toast = useToast()
     const [nis, setNis] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const onSubmit = e => {
@@ -364,21 +367,25 @@ const Search = () => {
                     router.push(`/student/${res.data.data}`)
                 } else {
                     setIsLoading(false)
-                    MySwal.fire({
-                        title: 'Tidak Ditemukan',
-                        text: res.data.data,
-                        icon: 'error',
+                    toast({
+                        title: 'Tidak ditemukan',
+                        description: res.data.data,
+                        status: 'warning',
+                        position: 'top-right',
+                        duration: 5000,
+                        isClosable: true,
                     })
                 }
             })
     }
     return <form onSubmit={onSubmit}>
-        <div className={Styles.search_form}>
-            <input onChange={(e) => {
+        <Flex border={'1px'} p={2} pl={3} borderColor={'blackAlpha.300'} borderRadius={'full'}>
+            <Input variant={'unstyled'} onChange={(e) => {
                 setNis(e.target.value)
             }} type={'text'} placeholder={'Cari berdasarkan NIS'} disabled={isLoading} value={nis}/>
-            <button type={'submit'} disabled={isLoading}/>
-        </div>
+            <Button isLoading={isLoading} type={'submit'} fontSize={'xl'} p={0} color={'blackAlpha.500'}
+                    variant={'ghost'} borderRadius={'full'} size={'sm'} disabled={isLoading}><RiSearchLine/></Button>
+        </Flex>
     </form>
 }
 export {Login, SubmitPenalty, Search}
