@@ -11,6 +11,6 @@ $danger: #bb3333 !default;
 
 $colors: ('main':$main, 'success':$success, 'warning':$warning, 'danger':$danger);
 
-$frow-enable-buttons: true;
+$frow-enable-buttons: false;
 
 $lightestBlack: rgba($black, .1);

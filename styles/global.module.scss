@@ -1,5 +1,108 @@
 @import "mainUtil";
 
+.profile_nav_wrapper {
+  display: flex;
+  align-items: center;
+  background: darken($white, 5%);
+  @include borderRadius(2rem);
+  padding: .3rem .5rem .3rem .3rem;
+  border: 1px solid $lightestBlack;
+
+  .profile_info {
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    border: 1px solid $lightestBlack;
+    @include borderRadius(1.5rem);
+    @include defaultTransition;
+    margin-right: .5rem;
+  }
+
+  .profile_name {
+    //font-size: 90%;
+    background: transparent;
+    border: none;
+    color: $default_black;
+    padding: 0;
+    line-height: 1;
+    cursor: pointer;
+    font-weight: 600;
+    //text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+
+    &:after {
+      padding-left: .25rem;
+      font-family: 'remixicon' !important;
+      content: "\ea4e";
+    }
+  }
+}
+
+.nav_drawer {
+  .nav_profile_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: darken($white, 5%);
+    padding: 1rem;
+
+    .nav_profile {
+      width: 80px;
+      height: 80px;
+      background-size: contain;
+      @include borderRadius(40px);
+      margin-bottom: .5rem;
+      border: 1px solid $lightestBlack;
+    }
+
+    p {
+      margin: 0;
+      font-weight: 500;
+      text-align: center;
+      text-transform: capitalize;
+
+      span {
+        font-weight: 400;
+        display: block;
+        color: lighten($default_black, 20%);
+        font-size: 80%;
+        text-transform: lowercase;
+      }
+    }
+  }
+
+  .nav_list {
+    padding: 1rem 0;
+
+    ul {
+      background: $white;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        margin-bottom: .5rem;
+
+        a {
+          //font-size: 90%;
+          text-decoration: none;
+          display: block;
+          //font-weight: 500;
+
+          span {
+            font-weight: 300;
+            display: block;
+            font-size: 90%;
+            color: lighten($default_black, 30%);
+          }
+        }
+      }
+    }
+  }
+}
+
 .top_nav_wrapper {
   position: relative;
 
@@ -63,152 +166,6 @@
           }
         }
 
-        .nav_wrapper {
-          position: relative;
-
-          .profile_nav_wrapper {
-            display: flex;
-            align-items: center;
-            background: darken($white, 5%);
-            @include borderRadius(2rem);
-            padding: .3rem .5rem .3rem .3rem;
-            border: 1px solid $lightestBlack;
-
-            .profile_info {
-              width: 24px;
-              height: 24px;
-              background-size: cover;
-              border: 1px solid $lightestBlack;
-              @include borderRadius(1.5rem);
-              @include defaultTransition;
-              margin-right: .5rem;
-            }
-
-            .profile_name {
-              font-size: 90%;
-              background: transparent;
-              border: none;
-              color: $default_black;
-              padding: 0;
-              line-height: 1;
-              cursor: pointer;
-              font-weight: 600;
-              //text-transform: capitalize;
-              display: inline-flex;
-              align-items: center;
-
-              &:after {
-                padding-left: .25rem;
-                font-family: 'remixicon' !important;
-                content: "\ea4e";
-              }
-            }
-          }
-
-          .nav_box {
-            border: 1px solid $lightestBlack;
-            position: absolute;
-            top: calc(35px + .25rem);
-            right: 0;
-            width: 250px;
-            //height: 270px;
-            background: $white;
-            z-index: 1000;
-            overflow: hidden;
-            @include boxShadow;
-            @include defaultBorderRadius;
-            @include defaultTransition;
-
-            .nav_profile_wrapper {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-direction: column;
-              background: darken($white, 5%);
-              padding: 1rem;
-
-              .nav_profile {
-                width: 80px;
-                height: 80px;
-                background-size: contain;
-                @include borderRadius(40px);
-                margin-bottom: .75rem;
-                border: 1px solid $lightestBlack;
-              }
-
-              p {
-                margin: 0;
-                font-weight: 700;
-                text-align: center;
-                text-transform: capitalize;
-
-                span {
-                  font-weight: 400;
-                  display: block;
-                  color: lighten($default_black, 20%);
-                  font-size: 80%;
-                  text-transform: lowercase;
-                }
-              }
-            }
-
-            .nav_list {
-              padding: 1rem;
-
-              ul {
-                background: $white;
-                margin: 0;
-                padding: 0;
-                list-style: none;
-
-                li {
-                  margin-bottom: .5rem;
-
-                  a {
-                    font-size: 90%;
-                    text-decoration: none;
-                    display: block;
-                    font-weight: 500;
-
-                    span {
-                      font-weight: 300;
-                      display: block;
-                      font-size: 80%;
-                      color: lighten($default_black, 30%);
-                    }
-                  }
-
-                  &:last-child {
-                    border-top: 1px solid $lightestBlack;
-                    padding-top: .5rem;
-                    margin-bottom: 0;
-
-                    span {
-                      cursor: pointer;
-                      background: transparent;
-                      border: none;
-                      padding: 0;
-                      color: $danger;
-                      font-size: 90%;
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          &.nav_close {
-            .profile_info {
-              //@include boxShadow;
-            }
-
-            .nav_box {
-              display: none;
-              //width: 0;
-              //height: 0;
-            }
-          }
-        }
       }
     }
 

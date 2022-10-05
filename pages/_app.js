@@ -7,6 +7,7 @@ import {userService} from "../services/user.service";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import {useRouter} from "next/router";
+import {ChakraProvider, extendTheme} from '@chakra-ui/react'
 
 const MySwal = withReactContent(Swal)
 
@@ -53,12 +54,20 @@ function MyApp({Component, pageProps}) {
             }
         }
     }, [])
-    return <>
+    const customColors = {
+        brand: {
+            900: '#1a365d',
+            800: '#153e75',
+            700: '#2a69ac',
+        },
+    }
+    const theme = extendTheme({customColors})
+    return <ChakraProvider theme={theme}>
         <Head>
             <title>SMK Negeri Ngasem</title>
         </Head>
         <Component {...pageProps} />
-    </>
+    </ChakraProvider>
 }
 
 export default MyApp
