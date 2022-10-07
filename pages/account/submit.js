@@ -4,6 +4,7 @@ import {helper} from "../../services/helper";
 import {useRouter} from "next/router";
 import Styles from '../../styles/pages/submit.module.scss'
 import {PanelPage} from "../../components/account";
+import {PageContent} from "../../components/global";
 
 const SubmitPage = () => {
     const router = useRouter()
@@ -17,9 +18,9 @@ const SubmitPage = () => {
             }
         }
     }, [isLoaded])
-    return <PanelPage title={'Catat Pelanggaran'} noAddButton={true}>
+    return <PageContent id={'submit'}>
         <SubmitPenalty/>
-    </PanelPage>
+    </PageContent>
 }
 
 export default SubmitPage

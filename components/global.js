@@ -30,29 +30,27 @@ import {
 } from "@chakra-ui/react";
 import {RiSettings3Line, RiUser3Line} from "react-icons/ri";
 
-const ConfirmLogout = props => {
-    const {isOpen, onOpen, onClose} = useDisclosure()
+const ConfirmationDialog = props => {
     const cancelRef = useRef()
-
     return (
         <>
-            <Button colorScheme={'red'} onClick={onOpen}>Keluar</Button>
-            <AlertDialog isOpen={isOpen}
+            <AlertDialog motionPreset={'slideInBottom'} isOpen={props.isOpen}
                          leastDestructiveRef={cancelRef}
-                         onClose={onClose}
+                         onClose={props.onClose}
                          isCentered>
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>Konfirmasi Keluar</AlertDialogHeader>
-
-                        <AlertDialogBody>Anda yakin ingin keluar?</AlertDialogBody>
-
+                        {props.title ?
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>{props.title}</AlertDialogHeader> :
+                            <></>}
+                        <AlertDialogBody>{props.content}</AlertDialogBody>
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>Batal</Button>
-                            <Button colorScheme={'red'} onClick={() => {
-                                props.callbackOnLogout()
-                                onClose()
-                            }} ml={3}>Iya, Keluar</Button>
+                            <Button variant={'ghost'} ref={cancelRef}
+                                    onClick={props.onClose}>{props.cancelButtonText ?? 'Batal'}</Button>
+                            <Button colorScheme={props.confirmButtonColor ?? 'red'} onClick={() => {
+                                props.callbackOnConfirm()
+                                props.onClose()
+                            }} ml={3}>{props.confirmButtonText ?? 'Konfirmasi'}</Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialogOverlay>
@@ -60,14 +58,23 @@ const ConfirmLogout = props => {
         </>
     )
 }
-const TopNav = props => {
+const TopNav = () => {
     const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState('')
     const [username, setUsername] = useState('')
     const [isSticky, setIsSticky] = useState(false)
-    const {isOpen, onOpen, onClose} = useDisclosure()
+    const {
+        isOpen: isOpenDrawer,
+        onOpen: onOpenDrawer,
+        onClose: onCloseDrawer
+    } = useDisclosure()
+    const {
+        isOpen: isOpenLogout,
+        onOpen: onOpenLogout,
+        onClose: onCloseLogout
+    } = useDisclosure()
     const stickyNavbar = () => {
         if (window !== undefined) {
             let windowHeight = window.scrollY
@@ -97,13 +104,12 @@ const TopNav = props => {
                         <Avatar size={'xs'} name={name} src={avatar}/>
                     </Square>
                     <Center px={2}>
-                        <Text fontWeight={'medium'} fontSize={'md'} onClick={() => {
-                            onOpen()
-                        }} cursor={'pointer'}>{username}</Text>
+                        <Text fontWeight={'medium'} fontSize={'md'} onClick={onOpenDrawer}
+                              cursor={'pointer'}>{username}</Text>
                     </Center>
                 </Flex>
             </Box>
-            <Drawer placement={'right'} onClose={onClose} isOpen={isOpen}>
+            <Drawer placement={'right'} onClose={onCloseDrawer} isOpen={isOpenDrawer}>
                 <DrawerOverlay/>
                 <DrawerContent>
                     <DrawerCloseButton/>
@@ -155,11 +161,18 @@ const TopNav = props => {
                         </Box>
                     </DrawerBody>
                     <DrawerFooter>
-                        <ConfirmLogout callbackOnLogout={() => {
-                            helper.logOut()
-                            setIsLogin(false)
-                            router.push('/login')
-                        }}/>
+                        <Button colorScheme={'red'} onClick={onOpenLogout}>Keluar</Button>
+                        <ConfirmationDialog
+                            title={'Konfirmasi'}
+                            content={'Yakin ingin keluar?'}
+                            onClose={onCloseLogout}
+                            isOpen={isOpenLogout}
+                            confirmButtonText={'Iya, keluar'}
+                            callbackOnConfirm={() => {
+                                helper.logOut()
+                                setIsLogin(false)
+                                router.push('/login')
+                            }}/>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
@@ -188,9 +201,6 @@ const TopNav = props => {
                 </Box>
             </Flex>
         </Container>
-        {isLogin && !props.noAddButton ?
-            <div className={Styles.float_bottom}><Link href={'/account/submit'}><a
-                className={Styles.block_a}></a></Link></div> : <></>}
     </Box>
 }
 const PageContent = props => {
@@ -240,8 +250,17 @@ const Loader = () => {
         <ReactLoading type={'spokes'} color={'#773377'} height={64} width={64}/>
     </div>
 }
-ConfirmLogout.propTypes = {
-    callbackOnLogout: PropTypes.func.isRequired
+
+ConfirmationDialog.propTypes = {
+    title: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    cancelButtonText: PropTypes.string,
+    confirmButtonText: PropTypes.string,
+    confirmButtonColor: PropTypes.string,
+    callbackOnCancel: PropTypes.func,
+    callbackOnConfirm: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
 }
 TopNav.propTypes = {
     noAddButton: PropTypes.bool
@@ -261,4 +280,4 @@ HeadingTitle.propTypes = {
     isCenter: PropTypes.bool
 }
 
-export {TopNav, PageContent, Section, HeadingTitle, Footer, Info, Loader}
+export {TopNav, ConfirmationDialog, PageContent, Section, HeadingTitle, Footer, Info, Loader}

@@ -1,15 +1,16 @@
-import {PanelPage} from "../../components/account";
+// import {PanelPage} from "../../components/account";
 import {useEffect, useState} from "react";
 import {helper} from "../../services/helper";
-import Styles from '../../styles/pages/account.module.scss'
+// import Styles from '../../styles/pages/account.module.scss'
+import {PageContent} from "../../components/global";
 
 const AccountPage = () => {
     const [name, setName] = useState('')
     useEffect(() => {
         setName(helper.getName)
     }, [])
-    return <PanelPage title={name}>
+    return <PageContent id={'submit'}>
         <p>Hallo Juragan</p>
-    </PanelPage>
+    </PageContent>
 }
 export default AccountPage
