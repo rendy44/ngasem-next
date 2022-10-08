@@ -1,26 +1,22 @@
-import loginStyle from '../styles/pages/login.module.scss'
-import {Footer, Section} from "../components/global";
+import {PageContent} from "../components/global";
 import {Login} from "../components/form";
-import Image from "next/image";
-import loginImg from '../public/login.png'
+import {Box, Flex, Heading, Image, Text} from "@chakra-ui/react";
 
 const LoginPage = () => {
-    return <>
-        <Section id={'login'} extraClass={loginStyle.login}>
-            <div className={loginStyle.wrapper}>
-                <div className={loginStyle.illustration}>
-                    <Image src={loginImg} alt={'Login illustration'}/>
-                </div>
-                <div className={loginStyle.form}>
-                    <h1>Selamat datang kembali!</h1>
-                    <p>Untuk dapat memberikan pelanggaran silahkan masuk menggunakan username dan kata sandi yang sudah
-                        didaftarkan</p>
-                    <Login/>
-                </div>
-            </div>
-        </Section>
-        <Footer/>
-    </>
+    return <PageContent id={'login'}>
+        <Flex alignItems={'center'} flexDirection={{base: 'column', md: 'row'}}>
+            <Box mb={3} w={{base: 'full', lg: '60%'}}>
+                <Image src={'/login.png'} alt={'Login illustration'}/>
+            </Box>
+            <Box w={{base: 'full', lg: '40%'}}>
+                <Heading mb={5} as={'h1'}>Selamat datang kembali!</Heading>
+                <Text fontSize={'md'} mb={6}>Untuk dapat mencatat pelanggaran silahkan masuk menggunakan nama pengguna
+                    dan kata sandi yang
+                    telah didaftarkan.</Text>
+                <Login/>
+            </Box>
+        </Flex>
+    </PageContent>
 }
 
 export default LoginPage;

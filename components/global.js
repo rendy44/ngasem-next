@@ -1,20 +1,85 @@
 import PropTypes from "prop-types";
-import Styles from '../styles/global.module.scss'
-import ReactLoading from "react-loading";
-import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {helper} from "../services/helper";
-import MySwal from "sweetalert2";
 import {useRouter} from "next/router";
-import Image from "next/image";
+import NextLink from "next/link"
+import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Avatar,
+    Box,
+    Button, Center, Container,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay, Flex, Heading,
+    Icon,
+    Image, Link, ListItem, Spinner,
+    Square,
+    Text, UnorderedList,
+    useDisclosure
+} from "@chakra-ui/react";
+import {RiSettings3Line, RiUser3Line} from "react-icons/ri";
+import {AddIcon} from "@chakra-ui/icons";
 
+const ConfirmationDialog = props => {
+    const cancelRef = useRef()
+    return (
+        <>
+            <AlertDialog motionPreset={'slideInBottom'} isOpen={props.isOpen}
+                         leastDestructiveRef={cancelRef}
+                         onClose={props.onClose}
+                         isCentered>
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        {props.title ?
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>{props.title}</AlertDialogHeader> :
+                            <></>}
+                        <AlertDialogBody>{props.content}</AlertDialogBody>
+                        <AlertDialogFooter>
+                            <Button variant={'ghost'} ref={cancelRef}
+                                    onClick={props.onClose}>{props.cancelButtonText ?? 'Batal'}</Button>
+                            <Button colorScheme={props.confirmButtonColor ?? 'red'} onClick={() => {
+                                props.callbackOnConfirm()
+                                props.onClose()
+                            }} ml={3}>{props.confirmButtonText ?? 'Konfirmasi'}</Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+        </>
+    )
+}
 const TopNav = () => {
     const router = useRouter()
     const [isLogin, setIsLogin] = useState(false)
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState('')
     const [username, setUsername] = useState('')
-    const [isNavOpen, setIsNavOpen] = useState(false)
+    const [isSticky, setIsSticky] = useState(false)
+    const {
+        isOpen: isOpenDrawer,
+        onOpen: onOpenDrawer,
+        onClose: onCloseDrawer
+    } = useDisclosure()
+    const {
+        isOpen: isOpenLogout,
+        onOpen: onOpenLogout,
+        onClose: onCloseLogout
+    } = useDisclosure()
+    const stickyNavbar = () => {
+        if (window !== undefined) {
+            let windowHeight = window.scrollY
+            setIsSticky(windowHeight > 80)
+        }
+    }
     useEffect(() => {
         if (!isLogin) {
             setIsLogin(helper.isLogin)
@@ -23,127 +88,210 @@ const TopNav = () => {
             setAvatar(helper.getAvatar)
             setUsername(helper.getUserName)
         }
-    }, [isLogin])
-    let navButtons = <Link href={'/login'}><a className={Styles.button_login}>Masuk</a></Link>
+        window.addEventListener('scroll', stickyNavbar);
 
-    const simpleStyle = {
-        backgroundImage: `url(${avatar})`,
-    }
-    const logOutButton = <div className={isNavOpen ? Styles.nav_wrapper : `${Styles.nav_wrapper} ${Styles.nav_close}`}>
-        <div className={Styles.profile_info} style={simpleStyle}>
-            <button onClick={(e) => {
-                e.preventDefault();
-                setIsNavOpen(!isNavOpen)
-            }}></button>
-        </div>
-        <div className={Styles.nav_box}>
-            <div className={Styles.nav_profile_wrapper}>
-                <div className={Styles.nav_profile} style={simpleStyle}></div>
-                <p>{name}
-                    <span>@{username}</span>
-                </p>
-            </div>
-            <div className={Styles.nav_list}>
-                <ul>
-                    <li>
-                        <Link href={'/account'}>
-                            <a>Profil</a>
+        return () => {
+            window.removeEventListener('scroll', stickyNavbar);
+        };
+    }, [isLogin])
+    const navButtons = !isLogin ? ('/login' !== router.pathname ?
+            <NextLink href={'/login'}><Button colorScheme={'teal'}>Masuk</Button></NextLink> : <></>) :
+        <>
+            <Box bg={'blackAlpha.100'} p={1} borderRadius={'2xl'} border={'1px'} borderColor={'blackAlpha.300'}>
+                <Flex>
+                    <Square>
+                        <Avatar size={'xs'} name={name} src={avatar}/>
+                    </Square>
+                    <Center px={2}>
+                        <Text fontWeight={'medium'} fontSize={'md'} onClick={onOpenDrawer}
+                              cursor={'pointer'}>{username}</Text>
+                    </Center>
+                </Flex>
+            </Box>
+            <Drawer placement={'right'} onClose={onCloseDrawer} isOpen={isOpenDrawer}>
+                <DrawerOverlay/>
+                <DrawerContent>
+                    <DrawerCloseButton/>
+                    <DrawerHeader>Info Akun</DrawerHeader>
+                    <DrawerBody>
+                        <Box>
+                            <Flex alignItems={'center'} justifyContent={'center'} flexDirection={'column'}
+                                  bg={'blackAlpha.100'} p={4}>
+                                <Box mb={2}>
+                                    <Avatar size={'lg'} src={avatar} name={name}/>
+                                </Box>
+                                <NextLink href={'/account'}>
+                                    <Link textDecoration={'none'}>
+                                        <Text textAlign={'center'} textTransform={'capitalize'}
+                                              fontWeight={'medium'}>{name}</Text>
+                                        <Text textAlign={'center'} fontWeight={'light'}>@{username}</Text>
+                                    </Link>
+                                </NextLink>
+                            </Flex>
+                            <Box py={4}>
+                                <UnorderedList listStyleType={'none'} ml={0}>
+                                    <ListItem mb={3}>
+                                        <NextLink href={'/account'}>
+                                            <Link textDecoration={'none'}>
+                                                <Flex>
+                                                    <Box pr={2}><Icon w={7} h={7} as={RiUser3Line}/></Box>
+                                                    <Box>
+                                                        <Text fontWeight={'medium'}>Profil</Text>
+                                                        <Text fontWeight={'light'} fontSize={'sm'}>Lihat detail profil
+                                                            dan pelanggaran
+                                                            yang sudah tercatat</Text>
+                                                    </Box>
+                                                </Flex>
+                                            </Link>
+                                        </NextLink>
+                                    </ListItem>
+                                    <ListItem>
+                                        <NextLink href={'/account/setting'}>
+                                            <Link>
+                                                <Flex>
+                                                    <Box pr={2}><Icon w={7} h={7} as={RiSettings3Line}/></Box>
+                                                    <Box>
+                                                        <Text fontWeight={'medium'}>Pengaturan</Text>
+                                                        <Text fontWeight={'light'} fontSize={'sm'}>Perbaharui akun dan
+                                                            kata sandi</Text>
+                                                    </Box>
+                                                </Flex>
+                                            </Link>
+                                        </NextLink>
+                                    </ListItem>
+                                </UnorderedList>
+                            </Box>
+                        </Box>
+                    </DrawerBody>
+                    <DrawerFooter>
+                        <Button colorScheme={'red'} onClick={onOpenLogout}>Keluar</Button>
+                        <ConfirmationDialog
+                            title={'Konfirmasi'}
+                            content={'Yakin ingin keluar?'}
+                            onClose={onCloseLogout}
+                            isOpen={isOpenLogout}
+                            confirmButtonText={'Iya, keluar'}
+                            callbackOnConfirm={() => {
+                                helper.logOut()
+                                setIsLogin(false)
+                                router.push('/login')
+                            }}/>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
+        </>
+    return <Box py={2}>
+        <Container maxW={'container.xl'}>
+            <Flex justifyContent={'space-between'} alignItems={'center'}>
+                <Box>
+                    {'/' !== router.pathname ? <NextLink href={'/'}>
+                        <Link>
+                            <Flex alignItems={'center'}>
+                                <Box borderRight={'1px'} borderColor={'blackAlpha.300'} pr={1}>
+                                    <Image src={'/icons/logo192.png'} boxSize={'32px'}/>
+                                </Box>
+                                <Box pl={1}>
+                                    <Text color={'blackAlpha.700'} textDecoration={'none'} fontSize={'xs'}
+                                          lineHeight={'1.2'}>SMK Negeri<br/>Ngasem</Text>
+                                </Box>
+                            </Flex>
                         </Link>
-                    </li>
-                    <li>
-                        <Link href={'/account/setting'}>
-                            <a>Pengaturan</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <button onClick={() => {
-                            MySwal.fire({
-                                icon: 'question',
-                                title: 'Konfirmasi',
-                                text: `Anda masuk sebagai ${helper.getName()}, yakin ingin keluar?`,
-                                confirmButtonText: 'Iya, keluar',
-                                showCancelButton: true,
-                                cancelButtonText: 'Batal'
-                            })
-                                .then(res => {
-                                    if (res.isConfirmed) {
-                                        helper.logOut()
-                                        setIsLogin(false)
-                                        if ('/submit' === router.pathname) {
-                                            router.push('/login')
-                                        }
-                                    }
-                                })
-                        }}>Keluar
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    if (isLogin) {
-        navButtons = '/submit' === router.pathname ? logOutButton : <><Link href={'/submit'}><a
-            className={`${Styles.button_login} ${Styles.clear}`}>Lapor Pelanggaran</a></Link> {logOutButton}</>
-    }
-    return <div className={Styles.top_nav}>
-        <div className={'frow-container'}>
-            <div className={Styles.button_wrapper}>
-                {navButtons}
-            </div>
-        </div>
-    </div>
+                    </NextLink> : <></>}
+                </Box>
+                <Box>
+                    {navButtons}
+                </Box>
+            </Flex>
+        </Container>
+    </Box>
 }
-const Section = (props) => {
-    const elmClass = Styles.section
+const PageContent = props => {
+    return <Flex pos={'relative'} flexDirection={'column'}
+                 justifyContent={props.flowFromStart ? 'flex-start' : 'space-between'} minH={'100vh'}>
+        <TopNav/>
+        <Section
+            customBgColor={props.customBgColor}
+            noTopPadding={props.noTopPadding}
+            id={props.id}
+            containerWidth={props.containerWidth}>
+            {props.children}
+        </Section>
+        <Box h={'69px'}></Box>
+        <Footer/>
+    </Flex>
+}
+const Section = props => {
+    const headingElm = props.title ? <Heading as={'h1'} size={'2xl'}>{props.title}</Heading> : <></>
     return (
-        <div className={props.extraClass ? `${elmClass} ${props.extraClass}` : elmClass}>
-            <div className={'frow-container'}>
-                <div className={Styles.inner}>
-                    {props.title && <div className={props.isTitleCenter ? 'frow text-center' : 'frow row-start'}>
-                        <div className={'col-sm-2-3'}><h2 className={Styles.title}>{props.title}</h2></div>
-                    </div>}
+        <Box bg={props.customBgColor ?? 'white'} pb={{base: 12, md: 20}}
+             pt={props.noTopPadding ? 0 : {base: 12, md: 20}}>
+            <Container maxW={props.containerWidth ?? 'container.xl'}>
+                <Box>
+                    {props.isTitleCenter ? <Center>{headingElm}</Center> : <Box>{headingElm}</Box>}
                     {props.children}
-                </div>
-            </div>
-        </div>
+                </Box>
+            </Container>
+        </Box>
     )
 }
-const Footer = (props) => {
+const Footer = () => {
+    const router = useRouter()
+    const [isLogin, setIsLogin] = useState(false)
+    useEffect(() => {
+        setIsLogin(helper.isLogin)
+    }, [])
     return (
-        <footer className={Styles.footer}>
-            <div className={'frow-container'}>
-                <div className={Styles.p_wrapper}>
-                    <p>&copy; 2022 SMK Negeri Ngasem. All rights reserved</p>
-                    {props.children}
-                </div>
-            </div>
-        </footer>
+        <>
+            <Box pos={'absolute'} left={0} right={0} bottom={0} bg={'blackAlpha.100'} py={6}>
+                <Container maxW={'container.xl'}>
+                    <Center>
+                        <Text fontSize={'sm'} fontWeight={'light'}>&copy; 2022 SMK Negeri Ngasem. All rights
+                            reserved</Text>
+                    </Center>
+                </Container>
+            </Box>
+            {isLogin && '/account/submit' !== router.pathname ? <Box pos={'fixed'} bottom={3} right={3}>
+                <NextLink href={'/account/submit'}>
+                    <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
+                          display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'} h={'50px'}>
+                        <AddIcon fontSize={'2xl'}/>
+                    </Link>
+                </NextLink>
+            </Box> : <></>}
+        </>
     )
-}
-const HeadingTitle = props => {
-    const centerClass = props.isCenter ? 'text-center' : '';
-    return <div className={`${Styles.title} ${centerClass}`}>
-        <h1>{props.title}</h1>
-    </div>
-}
-const Info = props => {
-    return <p className={Styles.info}>{props.children}</p>
 }
 const Loader = () => {
-    return <div className={'frow'}>
-        <ReactLoading type={'spokes'} color={'#773377'} height={64} width={64}/>
-    </div>
+    return <Flex pos={'fixed'} zIndex={999999999999} top={0} left={0} right={0} bottom={0} alignItems={'center'} justifyContent={'center'}>
+        <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
+    </Flex>
 }
 
+ConfirmationDialog.propTypes = {
+    title: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    cancelButtonText: PropTypes.string,
+    confirmButtonText: PropTypes.string,
+    confirmButtonColor: PropTypes.string,
+    callbackOnCancel: PropTypes.func,
+    callbackOnConfirm: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+}
+PageContent.propTypes = {
+    id: PropTypes.string.isRequired,
+    containerWidth: PropTypes.string,
+    noTopPadding: PropTypes.bool,
+    customBgColor: PropTypes.string,
+    flowFromStart: PropTypes.bool
+}
 Section.propTypes = {
     id: PropTypes.string.isRequired,
-    extraClass: PropTypes.string,
     title: PropTypes.string,
     isTitleCenter: PropTypes.bool,
-}
-HeadingTitle.propTypes = {
-    title: PropTypes.string.isRequired,
-    isCenter: PropTypes.bool
+    containerWidth: PropTypes.string,
+    noTopPadding: PropTypes.bool,
+    customBgColor: PropTypes.string
 }
 
-export {TopNav, Section, HeadingTitle, Footer, Info, Loader}
+export {TopNav, ConfirmationDialog, PageContent, Section, Footer, Loader}

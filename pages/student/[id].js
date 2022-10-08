@@ -1,11 +1,23 @@
-import {Footer, Loader, Section} from "../../components/global";
+import {Loader, PageContent} from "../../components/global";
 import {dataService} from "../../services/data.service";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import Styles from '../../styles/pages/student.module.scss'
-import logoSmk from '../../public/graduating-student.png'
-import Image from "next/image";
-import Link from "next/link";
+import {
+    Avatar,
+    Box,
+    Flex,
+    Heading,
+    Icon,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Text,
+    VisuallyHidden
+} from "@chakra-ui/react";
+import {RiGroupLine, RiStickyNoteLine} from "react-icons/ri";
+import {PenaltyItem} from "../../components/penalties";
 
 const StudentDetailPage = () => {
     const router = useRouter();
@@ -27,80 +39,60 @@ const StudentDetailPage = () => {
             }
         }
     })
-    const studentContent = isLoaded ? <div className={Styles.detail_wrapper}>
-        <div className={'frow'}>
-            <div className={'col-md-2-3'}>
-                <div className={Styles.hero}>
-                    <div className={Styles.cover}>
-                        <Link href={'/'}>
-                            <a className={Styles.back}><span></span> Kembali</a>
-                        </Link>
-                        <span className={Styles.alt}>Photo by iam_os on Unsplash</span>
-                    </div>
-                    <div className={Styles.profile}>
-                        <div className={Styles.profile_image}>
-                            <Image src={logoSmk} className={Styles.img}/>
-                        </div>
-                        <div className={Styles.profile_info}>
-                            <h1 className={Styles.name}>{data.name}</h1>
-                            <p className={Styles.grade}>{data.grade}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={Styles.detail}>
-                    <h2>Informasi</h2>
-                    <div className={Styles.details_wrapper}>
-                        <div className={Styles.detail_item}>
-                            <label htmlFor="name">Nama lengkap</label>
-                            <span id="name">{data.name}</span>
-                        </div>
-                        <div className={Styles.detail_item}>
-                            <label htmlFor="nis">NIS</label>
-                            <span id="nis">{data.nis}</span>
-                        </div>
-                        <div className={Styles.detail_item}>
-                            <label htmlFor="grade">Kelas</label>
-                            <span id="grade">{data.grade}</span>
-                        </div>
-                        {parseInt(data.point) > 0 ? <div className={Styles.detail_item}>
-                            <label htmlFor="point">Poin terakumulasi</label>
-                            <span id="point">{data.point} poin</span>
-                        </div> : <></>}
-                    </div>
-                </div>
-                <div className={Styles.penalties}>
-                    <h2>Pelanggaran</h2>
-                    <div className={Styles.penalties_wrapper}>
-                        {data.penalties ?
-                            Object.entries(data.penalties).map((penalty, i) => {
-                                return <div className={Styles.detail_item} key={i}>
-                                    <div className={Styles.item_top}>
-                                        <span>Oleh <strong>{penalty[1].teacher}</strong> pada {penalty[1].date} sebesar {penalty[1].point} poin</span>
-                                    </div>
-                                    {penalty[1].description ?
-                                        <div className={Styles.item_body}>
-                                            <blockquote><p>{penalty[1].description}</p></blockquote>
-                                        </div> : <></>}
-                                    <div className={Styles.item_bottom}>
-                                        <ul>
-                                            <li>{penalty[1].penalty}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            })
-                            : <p className={Styles.empty}>Belum ada pelanggaran yang tercatat</p>}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> : <Loader/>
     return (
-        <>
-            <Section id={'studentDetail'} extraClass={isLoaded ? `${Styles.student} ${Styles.loaded}` : Styles.student}>
-                {studentContent}
-            </Section>
-            <Footer/>
-        </>
+        <PageContent id={'student'} containerWidth={'container.md'} flowFromStart={true}
+                     noTopPadding={true}>
+            {isLoaded ?
+                <>
+                    <Box>
+                        <Box h={'100px'} bgSize={'cover'} bgImage={'url(/hero.jpg)'} pos={'relative'}>
+                            <VisuallyHidden>Photo by iam_os on Unsplash</VisuallyHidden>
+                            <Box pos={'absolute'} top={'60%'} left={3}>
+                                <Avatar border={'2px'} borderColor={'blackAlpha.700'} mb={'-6'} bg={'white'} size={'lg'}
+                                        src={'/graduating-student.png'}/>
+                            </Box>
+                        </Box>
+                        <Box pt={6} pb={3} bg={'white'} borderBottom={'1px'} borderColor={'blackAlpha.200'}>
+                            <Box mb={3}>
+                                <Heading size={'md'} as={'h1'}>{data.name}</Heading>
+                                <Text fontSize={'sm'} fontWeight={'light'}>{data.nis}</Text>
+                            </Box>
+                            <Box>
+                                <Flex mb={1} alignItems={'top'} justifyContent={'flex-start'}>
+                                    <Icon as={RiGroupLine} mr={2}/>
+                                    <Text lineHeight={1} color={'blackAlpha.600'}>{data.grade}</Text>
+                                </Flex>
+                                <Flex alignItems={'top'} justifyContent={'flex-start'}>
+                                    <Icon as={RiStickyNoteLine} mr={2}/>
+                                    <Text lineHeight={1}
+                                          color={'blackAlpha.600'}>{data.point ? `${data.point} poin terakumulasi` : 'Belum ada pelanggaran yang tercatat'}</Text>
+                                </Flex>
+                            </Box>
+                        </Box>
+                        <Box bg={'white'}>
+                            <Tabs>
+                                <TabList>
+                                    <Tab><Text fontWeight={600}>Pelanggaran</Text></Tab>
+                                </TabList>
+                                <TabPanels>
+                                    <TabPanel px={0}>
+                                        {data.penalties ? Object.entries(data.penalties).map((penalty, i) => {
+                                            return <PenaltyItem
+                                                avatar={penalty[1].avatar}
+                                                teacher={penalty[1].teacher}
+                                                point={penalty[1].point}
+                                                penalty={penalty[1].penalty}
+                                                time_span={penalty[1].date_span}
+                                                description={penalty[1].description}/>
+                                        }) : <Text>Belum ada pelanggaran yang tercatat</Text>}
+                                    </TabPanel>
+                                </TabPanels>
+                            </Tabs>
+                        </Box>
+                    </Box>
+                </>
+                : <Loader/>}
+        </PageContent>
     )
 }
 

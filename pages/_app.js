@@ -1,18 +1,15 @@
-import '../styles/globals.scss'
 import {ReactSession} from "react-client-session";
 import Head from "next/head"
 import {useEffect, useState} from "react";
 import {helper} from "../services/helper";
 import {userService} from "../services/user.service";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
 import {useRouter} from "next/router";
-
-const MySwal = withReactContent(Swal)
+import {ChakraProvider, useToast} from '@chakra-ui/react'
 
 function MyApp({Component, pageProps}) {
     ReactSession.setStoreType("localStorage");
     const router = useRouter()
+    const toast = useToast()
     const [isLoaded, setIsLoaded] = useState(false)
     useEffect(() => {
         if (!isLoaded) {
@@ -29,36 +26,43 @@ function MyApp({Component, pageProps}) {
                             helper.setUserName(username)
                             setIsLoaded(true)
                         } else {
-                            MySwal.fire({
-                                icon: 'info',
-                                text: 'Sesi telah habis, silahkan login kembali',
-                            })
-                                .then(() => {
+                            toast({
+                                title: 'Sesi habis',
+                                description: 'Anda akan dialihkan, silahkan login kembali',
+                                status: 'warning',
+                                position: 'top-right',
+                                duration: 5000,
+                                isClosable: true,
+                                onCloseComplete: () => {
                                     helper.logOut()
                                     router.push('/login')
-                                })
+                                }
+                            })
                         }
                     })
                     .catch(() => {
-                        MySwal.fire({
-                            icon: 'error',
-                            title: 'Terjadi Kesalahan',
-                            text: 'Pastikan perangkat terhubung ke jaringan, silahkan coba lagi'
-                        })
-                            .then(() => {
+                        toast({
+                            title: 'Terjadi kesalahan',
+                            description: 'Pastikan perangkat terhubung ke jaringan, silahkan coba lagi',
+                            status: 'error',
+                            position: 'top-right',
+                            duration: 5000,
+                            isClosable: true,
+                            onCloseComplete: () => {
                                 helper.logOut()
                                 router.push('/login')
-                            })
+                            }
+                        })
                     })
             }
         }
     }, [])
-    return <>
+    return <ChakraProvider>
         <Head>
             <title>SMK Negeri Ngasem</title>
         </Head>
         <Component {...pageProps} />
-    </>
+    </ChakraProvider>
 }
 
 export default MyApp

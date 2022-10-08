@@ -1,12 +1,9 @@
-import {Footer, Section, TopNav} from "../../components/global";
+import {PageContent} from "../../components/global";
+import {Text} from "@chakra-ui/react";
 
 const SettingPage = () => {
-    return <>
-        <TopNav/>
-        <Section id={'setting'}>
-            <p>Hello there, setting</p>
-        </Section>
-        <Footer/>
-    </>
+    return <PageContent id={'setting'} flowFromStart={true}>
+        <Text>Coming soon</Text>
+    </PageContent>
 }
 export default SettingPage
