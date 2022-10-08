@@ -23,12 +23,13 @@ import {
     DrawerHeader,
     DrawerOverlay, Flex, Heading,
     Icon,
-    Image, Link, ListItem,
+    Image, Link, ListItem, Spinner,
     Square,
     Text, UnorderedList,
     useDisclosure
 } from "@chakra-ui/react";
 import {RiSettings3Line, RiUser3Line} from "react-icons/ri";
+import {AddIcon} from "@chakra-ui/icons";
 
 const ConfirmationDialog = props => {
     const cancelRef = useRef()
@@ -189,8 +190,7 @@ const TopNav = () => {
                                 </Box>
                                 <Box pl={1}>
                                     <Text color={'blackAlpha.700'} textDecoration={'none'} fontSize={'xs'}
-                                          lineHeight={'1.2'}
-                                          className={Styles.logo_name}>SMK Negeri<br/>Ngasem</Text>
+                                          lineHeight={'1.2'}>SMK Negeri<br/>Ngasem</Text>
                                 </Box>
                             </Flex>
                         </Link>
@@ -226,29 +226,32 @@ const Section = (props) => {
     )
 }
 const Footer = () => {
+    const router = useRouter()
     return (
-        <Box bg={'blackAlpha.100'} py={6}>
-            <Container maxW={'container.xl'}>
-                <Center>
-                    <Text fontSize={'sm'} fontWeight={'light'}>&copy; 2022 SMK Negeri Ngasem. All rights reserved</Text>
-                </Center>
-            </Container>
-        </Box>
+        <>
+            <Box bg={'blackAlpha.100'} py={6}>
+                <Container maxW={'container.xl'}>
+                    <Center>
+                        <Text fontSize={'sm'} fontWeight={'light'}>&copy; 2022 SMK Negeri Ngasem. All rights
+                            reserved</Text>
+                    </Center>
+                </Container>
+            </Box>
+            {'/account/submit' !== router.pathname ? <Box pos={'fixed'} bottom={3} right={3}>
+                <NextLink href={'/account/submit'}>
+                    <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
+                          display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'} h={'50px'}>
+                        <AddIcon fontSize={'2xl'}/>
+                    </Link>
+                </NextLink>
+            </Box> : <></>}
+        </>
     )
 }
-const HeadingTitle = props => {
-    const centerClass = props.isCenter ? 'text-center' : '';
-    return <div className={`${Styles.title} ${centerClass}`}>
-        <h1>{props.title}</h1>
-    </div>
-}
-const Info = props => {
-    return <p className={Styles.info}>{props.children}</p>
-}
 const Loader = () => {
-    return <div className={'frow'}>
-        <ReactLoading type={'spokes'} color={'#773377'} height={64} width={64}/>
-    </div>
+    return <Flex alignItems={'center'} justifyContent={'center'}>
+        <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
+    </Flex>
 }
 
 ConfirmationDialog.propTypes = {
@@ -275,9 +278,5 @@ Section.propTypes = {
     isTitleCenter: PropTypes.bool,
     containerWidth: PropTypes.string
 }
-HeadingTitle.propTypes = {
-    title: PropTypes.string.isRequired,
-    isCenter: PropTypes.bool
-}
 
-export {TopNav, ConfirmationDialog, PageContent, Section, HeadingTitle, Footer, Info, Loader}
+export {TopNav, ConfirmationDialog, PageContent, Section, Footer, Loader}

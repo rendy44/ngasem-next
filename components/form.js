@@ -147,14 +147,6 @@ const SubmitPenalty = () => {
                             checkConnection()
                         }
                     })
-                    // MySwal.fire({
-                    //     icon: 'error',
-                    //     text: 'Terjadi kesalahan, pastikan perangkat terhubung ke jaringan.',
-                    //     confirmButtonText: 'Coba Lagi',
-                    // })
-                    //     .then(() => {
-                    //         checkConnection()
-                    //     })
                 })
         }
     }
@@ -374,9 +366,7 @@ const SubmitPenalty = () => {
                 isOpen={isOpenConfirmation}
                 callbackOnConfirm={onConfirmSubmit}/>
         </Box>
-    </form> : <Flex alignItems={'center'} justifyContent={'center'}>
-        <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
-    </Flex>
+    </form> : <Loader/>
 }
 const Search = () => {
     const router = useRouter()
