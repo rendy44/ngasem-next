@@ -6,16 +6,17 @@ import {
     Avatar,
     Box,
     Flex,
-    GridItem,
     Heading,
     Icon,
-    Image,
-    SimpleGrid, Tab, TabList, TabPanel, TabPanels,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
     Tabs,
     Text,
     VisuallyHidden
 } from "@chakra-ui/react";
-import {RiGroupLine, RiLink, RiStickyNoteLine} from "react-icons/ri";
+import {RiGroupLine, RiStickyNoteLine} from "react-icons/ri";
 import {PenaltyItem} from "../../components/penalties";
 
 const StudentDetailPage = () => {
