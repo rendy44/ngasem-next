@@ -77,7 +77,7 @@ const StudentDetailPage = () => {
                                 <TabPanels>
                                     <TabPanel px={0}>
                                         {data.penalties ? Object.entries(data.penalties).map((penalty, i) => {
-                                            return <PenaltyItem
+                                            return <PenaltyItem key={i}
                                                 avatar={penalty[1].avatar}
                                                 teacher={penalty[1].teacher}
                                                 point={penalty[1].point}

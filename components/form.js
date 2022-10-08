@@ -70,17 +70,15 @@ const Login = () => {
     return <form onSubmit={handleSubmit(onSubmit)}>
         <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
             <InputGroup>
-                <InputLeftElement
-                    pointerEvents='none'
-                    children={<Icon as={RiUser3Line} color='blackAlpha.700'/>}
-                />
+                <InputLeftElement pointerEvents='none'>
+                    <Icon as={RiUser3Line} color='blackAlpha.700'/>
+                </InputLeftElement>
                 <Input variant={'flushed'} placeholder={'Nama pengguna'} {...register("username", {required: true})}/>
             </InputGroup>
             <InputGroup>
-                <InputLeftElement
-                    pointerEvents='none'
-                    children={<Icon as={RiLockPasswordLine} color='blackAlpha.700'/>}
-                />
+                <InputLeftElement pointerEvents='none'>
+                    <Icon as={RiLockPasswordLine} color='blackAlpha.700'/>
+                </InputLeftElement>
                 <Input type={'password'} variant={'flushed'}
                        placeholder={'Kata sandi'} {...register("password", {required: true})}/>
             </InputGroup>
