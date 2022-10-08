@@ -1,9 +1,8 @@
 import {Avatar, Box, Flex, Icon, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import {RiTimer2Line, RiChat1Line} from "react-icons/ri";
 import TimeAgo from 'javascript-time-ago'
 import id from 'javascript-time-ago/locale/id'
-import {BsChat, BsChatQuote, BsFileEarmarkBinary, BsPencilSquare} from "react-icons/bs";
+import {BsChat, BsFileEarmarkBinary, BsPencilSquare} from "react-icons/bs";
 
 TimeAgo.addDefaultLocale(id)
 
