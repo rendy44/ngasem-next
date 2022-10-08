@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-import Styles from '../styles/global.module.scss'
-import ReactLoading from "react-loading";
 import {useEffect, useRef, useState} from "react";
 import {helper} from "../services/helper";
 import {useRouter} from "next/router";
