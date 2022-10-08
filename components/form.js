@@ -1,11 +1,10 @@
 import {useRouter} from 'next/router'
-import Styles from '../styles/form.module.scss';
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import {userService} from "../services/user.service";
 import {helper} from "../services/helper";
 import {dataService} from "../services/data.service";
-import {ConfirmationDialog, Info, Loader} from "./global";
+import {ConfirmationDialog, Loader} from "./global";
 import {penaltyService} from "../services/penalty.service";
 import {
     Box,
@@ -68,7 +67,7 @@ const Login = () => {
                 })
             })
     }
-    return <form onSubmit={handleSubmit(onSubmit)} className={Styles.form}>
+    return <form onSubmit={handleSubmit(onSubmit)}>
         <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
             <InputGroup>
                 <InputLeftElement
@@ -284,7 +283,7 @@ const SubmitPenalty = () => {
         setSelectedStudentId(e.target.value)
         setSelectedStudentName(newStudentName)
     }
-    return isLoaded ? <form onSubmit={handleSubmit(onSubmit)} className={Styles.form}>
+    return isLoaded ? <form onSubmit={handleSubmit(onSubmit)}>
         <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
             <InputGroup>
                 <Select variant={'flushed'} {...register('category', {
