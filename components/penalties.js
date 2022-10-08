@@ -1,8 +1,9 @@
-import {Avatar, Box, Flex, Icon, SimpleGrid, Text} from "@chakra-ui/react";
+import {Avatar, Box, Flex, Icon, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import {RiFolder2Line, RiTimer2Line} from "react-icons/ri";
+import {RiTimer2Line, RiChat1Line} from "react-icons/ri";
 import TimeAgo from 'javascript-time-ago'
 import id from 'javascript-time-ago/locale/id'
+import {BsChat, BsChatQuote, BsFileEarmarkBinary, BsPencilSquare} from "react-icons/bs";
 
 TimeAgo.addDefaultLocale(id)
 
@@ -11,32 +12,57 @@ const PenaltyItem = props => {
     return <Flex mb={3} alignItems={'top'} justifyContent={'flex-start'} borderBottom={'1px'}
                  borderColor={'blackAlpha.100'}>
         <Box pr={3}>
-            <Avatar size={'sm'} src={props.avatar} name={props.teacher}/>
+            <Avatar src={props.avatar} name={props.teacher}/>
         </Box>
         <Box pb={3}>
             <Flex alignItems={'center'}>
                 <Text mr={1} textTransform={'capitalize'}
                       fontWeight={'600'}>{props.teacher}</Text>
                 <Text color={'blackAlpha.600'} mr={1}>-</Text>
-                <Text fontSize={'sm'} color={'blackAlpha.600'}>{props.point} poin</Text>
+                <Text fontSize={'sm'}
+                      color={'blackAlpha.600'}>{timeAgo.format(Date.now() - parseInt(props.time_span), 'mini')}</Text>
             </Flex>
-            <Box>
-                {props.description ?
-                    <Text>{props.description}</Text> :
-                    <Text fontWeight={'light'} fontStyle={'italic'} color={'blackAlpha.700'}>Tanpa keterangan</Text>}
+            <Box mb={3}>
+                <Text>{props.penalty}</Text>
             </Box>
-            <Box pt={1}>
-                <Flex mb={1} fontWeight={'light'} color={'blackAlpha.700'} fontSize={'xs'} alignItems={'flex-start'}
-                      justifyContent={'flex-start'}>
-                    <Icon as={RiTimer2Line} mr={1}/>
-                    <Text lineHeight={1}>{timeAgo.format(Date.now() - parseInt(props.time_span))}</Text>
+            <SimpleGrid columns={3} color={'blackAlpha.600'}>
+                <Flex alignItems={'center'}>
+                    {props.description ? <>
+                        <Icon as={BsChat} mr={2}/>
+                        <Text fontSize={'sm'}>1</Text>
+                    </> : <Icon color={'blackAlpha.300'} as={BsChat}/>}
                 </Flex>
-                <Flex fontWeight={'light'} color={'blackAlpha.700'} fontSize={'xs'} alignItems={'flex-start'}
-                      justifyContent={'flex-start'}>
-                    <Icon as={RiFolder2Line} mr={1}/>
-                    <Text lineHeight={1}>{props.penalty}</Text>
+                <Flex alignItems={'center'}>
+                    <Icon as={BsFileEarmarkBinary} mr={2}/>
+                    <Text fontSize={'sm'}>{props.point}</Text>
                 </Flex>
-            </Box>
+                <Box></Box>
+            </SimpleGrid>
+            {props.description ? <Flex pt={3} alignItems={'top'} justifyContent={'flex-start'}>
+                <Box pr={3}>
+                    <Avatar size={'sm'} src={props.avatar} name={props.teacher}/>
+                </Box>
+                <Box>
+                    <Flex alignItems={'center'}>
+                        <Text mr={1} textTransform={'capitalize'}
+                              fontWeight={'600'}>{props.teacher}</Text>
+                        <Text color={'blackAlpha.600'} mr={1}>-</Text>
+                        <Text fontSize={'sm'}
+                              color={'blackAlpha.600'}>{timeAgo.format(Date.now() - parseInt(props.time_span), 'mini')}</Text>
+                    </Flex>
+                    <Box>
+                        <Text fontSize={'sm'} color={'blackAlpha.600'}>Menambahkan catatan</Text>
+                        <Text>{props.description}</Text>
+                    </Box>
+                </Box>
+            </Flex> : <></>}
+            {/*<Box pt={1}>*/}
+            {/*    <Flex mb={1} fontWeight={'light'} color={'blackAlpha.700'} fontSize={'xs'} alignItems={'flex-start'}*/}
+            {/*          justifyContent={'flex-start'}>*/}
+            {/*        <Icon as={RiTimer2Line} mr={1}/>*/}
+            {/*        <Text lineHeight={1}>{timeAgo.format(Date.now() - parseInt(props.time_span))}</Text>*/}
+            {/*    </Flex>*/}
+            {/*</Box>*/}
         </Box>
     </Flex>
 }

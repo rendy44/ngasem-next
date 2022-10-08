@@ -1,7 +1,7 @@
-import {PanelPage} from "../../components/account";
+import {PageContent} from "../../components/global";
 
 const SettingPage = () => {
-    return <PanelPage title={'Pengaturan'}>
-    </PanelPage>
+    return <PageContent id={'setting'}>
+    </PageContent>
 }
 export default SettingPage

@@ -103,8 +103,8 @@ const TopNav = () => {
                         <Avatar size={'xs'} name={name} src={avatar}/>
                     </Square>
                     <Center px={2}>
-                        <Text fontWeight={'medium'} textTransform={'capitalize'} fontSize={'md'} onClick={onOpenDrawer}
-                              cursor={'pointer'}>{name}</Text>
+                        <Text fontWeight={'medium'} fontSize={'md'} onClick={onOpenDrawer}
+                              cursor={'pointer'}>{username}</Text>
                     </Center>
                 </Flex>
             </Box>
@@ -262,7 +262,7 @@ const Footer = () => {
     )
 }
 const Loader = () => {
-    return <Flex alignItems={'center'} justifyContent={'center'}>
+    return <Flex pos={'fixed'} zIndex={999999999999} top={0} left={0} right={0} bottom={0} alignItems={'center'} justifyContent={'center'}>
         <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
     </Flex>
 }
