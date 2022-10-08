@@ -103,8 +103,8 @@ const TopNav = () => {
                         <Avatar size={'xs'} name={name} src={avatar}/>
                     </Square>
                     <Center px={2}>
-                        <Text fontWeight={'medium'} fontSize={'md'} onClick={onOpenDrawer}
-                              cursor={'pointer'}>{username}</Text>
+                        <Text fontWeight={'medium'} textTransform={'capitalize'} fontSize={'md'} onClick={onOpenDrawer}
+                              cursor={'pointer'}>{name}</Text>
                     </Center>
                 </Flex>
             </Box>
@@ -121,7 +121,11 @@ const TopNav = () => {
                                     <Avatar size={'lg'} src={avatar} name={name}/>
                                 </Box>
                                 <NextLink href={'/account'}>
-                                    <Link><Text textTransform={'capitalize'} fontWeight={'medium'}>{name}</Text></Link>
+                                    <Link textDecoration={'none'}>
+                                        <Text textAlign={'center'} textTransform={'capitalize'}
+                                              fontWeight={'medium'}>{name}</Text>
+                                        <Text textAlign={'center'} fontWeight={'light'}>@{username}</Text>
+                                    </Link>
                                 </NextLink>
                             </Flex>
                             <Box py={4}>
@@ -202,18 +206,25 @@ const TopNav = () => {
     </Box>
 }
 const PageContent = props => {
-    return <Flex flexDirection={'column'} justifyContent={'space-between'} minH={'100vh'}>
+    return <Flex pos={'relative'} flexDirection={'column'}
+                 justifyContent={props.flowFromStart ? 'flex-start' : 'space-between'} minH={'100vh'}>
         <TopNav/>
-        <Section id={props.id} containerWidth={props.containerWidth}>
+        <Section
+            customBgColor={props.customBgColor}
+            noTopPadding={props.noTopPadding}
+            id={props.id}
+            containerWidth={props.containerWidth}>
             {props.children}
         </Section>
+        <Box h={'69px'}></Box>
         <Footer/>
     </Flex>
 }
-const Section = (props) => {
+const Section = props => {
     const headingElm = props.title ? <Heading as={'h1'} size={'2xl'}>{props.title}</Heading> : <></>
     return (
-        <Box py={{base: 12, md: 20}}>
+        <Box bg={props.customBgColor ?? 'white'} pb={{base: 12, md: 20}}
+             pt={props.noTopPadding ? 0 : {base: 12, md: 20}}>
             <Container maxW={props.containerWidth ?? 'container.xl'}>
                 <Box>
                     {props.isTitleCenter ? <Center>{headingElm}</Center> : <Box>{headingElm}</Box>}
@@ -225,9 +236,13 @@ const Section = (props) => {
 }
 const Footer = () => {
     const router = useRouter()
+    const [isLogin, setIsLogin] = useState(false)
+    useEffect(() => {
+        setIsLogin(helper.isLogin)
+    }, [])
     return (
         <>
-            <Box bg={'blackAlpha.100'} py={6}>
+            <Box pos={'absolute'} left={0} right={0} bottom={0} bg={'blackAlpha.100'} py={6}>
                 <Container maxW={'container.xl'}>
                     <Center>
                         <Text fontSize={'sm'} fontWeight={'light'}>&copy; 2022 SMK Negeri Ngasem. All rights
@@ -235,7 +250,7 @@ const Footer = () => {
                     </Center>
                 </Container>
             </Box>
-            {'/account/submit' !== router.pathname ? <Box pos={'fixed'} bottom={3} right={3}>
+            {isLogin && '/account/submit' !== router.pathname ? <Box pos={'fixed'} bottom={3} right={3}>
                 <NextLink href={'/account/submit'}>
                     <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
                           display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'} h={'50px'}>
@@ -263,18 +278,20 @@ ConfirmationDialog.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
 }
-TopNav.propTypes = {
-    noAddButton: PropTypes.bool
-}
 PageContent.propTypes = {
     id: PropTypes.string.isRequired,
-    containerWidth: PropTypes.string
+    containerWidth: PropTypes.string,
+    noTopPadding: PropTypes.bool,
+    customBgColor: PropTypes.string,
+    flowFromStart: PropTypes.bool
 }
 Section.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string,
     isTitleCenter: PropTypes.bool,
-    containerWidth: PropTypes.string
+    containerWidth: PropTypes.string,
+    noTopPadding: PropTypes.bool,
+    customBgColor: PropTypes.string
 }
 
 export {TopNav, ConfirmationDialog, PageContent, Section, Footer, Loader}
