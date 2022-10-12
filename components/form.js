@@ -14,12 +14,13 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    Select, Spinner, Text,
+    Select, Text,
     Textarea, useDisclosure,
     useToast
 } from "@chakra-ui/react";
 import {RiLockPasswordLine, RiSearchLine, RiUser3Line} from "react-icons/ri";
 import {WarningIcon} from "@chakra-ui/icons";
+import PropTypes from "prop-types";
 
 const Login = () => {
     const router = useRouter()
@@ -84,13 +85,13 @@ const Login = () => {
             </InputGroup>
         </Box>
         <Box>
-            <Button borderRadius={'full'} isLoading={isDisabled} disabled={isDisabled} type="submit"
+            <Button size={'lg'} borderRadius={'full'} isLoading={isDisabled} disabled={isDisabled} type="submit"
                     colorScheme={'teal'}
                     w={'100%'}>Masuk</Button>
         </Box>
     </form>
 }
-const SubmitPenalty = () => {
+const SubmitPenalty = props => {
     const toast = useToast()
     const {register, handleSubmit} = useForm()
     const [isLoaded, setIsLoaded] = useState(false)
@@ -305,39 +306,41 @@ const SubmitPenalty = () => {
                     })}
                 </Select>
             </InputGroup>
-            <InputGroup>
-                <Select variant={'flushed'} {...register('grade', {
-                    onChange: onGradeChange,
-                    required: true,
-                })} value={selectedGradeId}>
-                    <option key={''} value={''}>Pilih kelas</option>
-                    {['x', 'xi', 'xii', 'xiii'].map((cat) => {
-                        return <option key={cat} value={cat}>{`Kelas ${cat.toUpperCase()}`}</option>
-                    })}
-                </Select>
-            </InputGroup>
-            <InputGroup>
-                <Select variant={'flushed'} disabled={isMajorDisabled} {...register('major', {
-                    onChange: onMajorChange,
-                    required: true
-                })}>
-                    <option key={''} value={''}>Pilih jurusan</option>
-                    {gradeMajors.map((cat) => {
-                        return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
-                    })}
-                </Select>
-            </InputGroup>
-            <InputGroup>
-                <Select variant={'flushed'} disabled={isStudentDisabled} {...register('student', {
-                    onChange: onStudentChange,
-                    required: true,
-                })}>
-                    <option key={''} value={''}>Pilih siswa</option>
-                    {students.map((cat) => {
-                        return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
-                    })}
-                </Select>
-            </InputGroup>
+            {!props.studentId ? <>
+                <InputGroup>
+                    <Select variant={'flushed'} {...register('grade', {
+                        onChange: onGradeChange,
+                        required: true,
+                    })} value={selectedGradeId}>
+                        <option key={''} value={''}>Pilih kelas</option>
+                        {['x', 'xi', 'xii', 'xiii'].map((cat) => {
+                            return <option key={cat} value={cat}>{`Kelas ${cat.toUpperCase()}`}</option>
+                        })}
+                    </Select>
+                </InputGroup>
+                <InputGroup>
+                    <Select variant={'flushed'} disabled={isMajorDisabled} {...register('major', {
+                        onChange: onMajorChange,
+                        required: true
+                    })}>
+                        <option key={''} value={''}>Pilih jurusan</option>
+                        {gradeMajors.map((cat) => {
+                            return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
+                        })}
+                    </Select>
+                </InputGroup>
+                <InputGroup>
+                    <Select variant={'flushed'} disabled={isStudentDisabled} {...register('student', {
+                        onChange: onStudentChange,
+                        required: true,
+                    })}>
+                        <option key={''} value={''}>Pilih siswa</option>
+                        {students.map((cat) => {
+                            return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
+                        })}
+                    </Select>
+                </InputGroup>
+            </> : <></>}
             <InputGroup>
                 <Textarea variant={'flushed'} {...register('description', {
                     onChange: e => {
@@ -352,7 +355,7 @@ const SubmitPenalty = () => {
                     dikirim, pastikan data yang dipilih sudah sesuai.</Text>
             </> : ''}
         <Box>
-            <Button colorScheme={'teal'} width={'full'} borderRadius={'full'} isLoading={isDisabled}
+            <Button size={'lg'} colorScheme={'teal'} width={'full'} borderRadius={'full'} isLoading={isDisabled}
                     disabled={isDisabled} type={'submit'}>Kirim</Button>
             <ConfirmationDialog
                 title={'Konfirmasi'}
@@ -402,5 +405,9 @@ const Search = () => {
                     variant={'ghost'} borderRadius={'full'} size={'sm'} disabled={isLoading}><RiSearchLine/></Button>
         </Flex>
     </form>
+}
+
+SubmitPenalty.propTypes = {
+    studentId: PropTypes.number
 }
 export {Login, SubmitPenalty, Search}

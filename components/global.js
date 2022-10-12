@@ -164,7 +164,7 @@ const TopNav = () => {
                         </Box>
                     </DrawerBody>
                     <DrawerFooter>
-                        <Button colorScheme={'red'} onClick={onOpenLogout}>Keluar</Button>
+                        <Button variant={'link'} colorScheme={'red'} onClick={onOpenLogout}>Keluar</Button>
                         <ConfirmationDialog
                             title={'Konfirmasi'}
                             content={'Yakin ingin keluar?'}
@@ -250,19 +250,23 @@ const Footer = () => {
                     </Center>
                 </Container>
             </Box>
-            {isLogin && '/account/submit' !== router.pathname ? <Box pos={'fixed'} bottom={3} right={3}>
-                <NextLink href={'/account/submit'}>
-                    <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
-                          display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'} h={'50px'}>
-                        <AddIcon fontSize={'2xl'}/>
-                    </Link>
-                </NextLink>
-            </Box> : <></>}
+            {isLogin && '/account/submit' !== router.pathname ?
+                <Box pos={'fixed'} bottom={{base: 3, md: 6}} right={{base: 3, md: 6}}>
+                    <NextLink
+                        href={'/student/[id]' === router.pathname && router.query.id ? `/account/submit/${router.query.id}` : '/account/submit'}>
+                        <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
+                              display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'}
+                              h={'50px'}>
+                            <AddIcon fontSize={'2xl'}/>
+                        </Link>
+                    </NextLink>
+                </Box> : <></>}
         </>
     )
 }
 const Loader = () => {
-    return <Flex pos={'fixed'} zIndex={999999999999} top={0} left={0} right={0} bottom={0} alignItems={'center'} justifyContent={'center'}>
+    return <Flex pos={'fixed'} zIndex={999999999999} top={0} left={0} right={0} bottom={0} alignItems={'center'}
+                 justifyContent={'center'}>
         <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
     </Flex>
 }
