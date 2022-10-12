@@ -406,8 +406,34 @@ const Search = () => {
         </Flex>
     </form>
 }
+const ChangePassword = () =>{
+    const {register, handleSubmit} = useForm()
+    const onSubmit = (e) =>{
+
+    }
+    return <form onSubmit={handleSubmit(onSubmit)}>
+        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <InputGroup>
+                <Input type={'password'} variant={'flushed'} placeholder={'Kata sandi saat ini'} {...register("password", {required: true})}/>
+            </InputGroup>
+        </Box>
+        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <InputGroup>
+                <Input type={'password'} variant={'flushed'} placeholder={'Kata sandi baru'} {...register("password1", {required: true})}/>
+            </InputGroup>
+            <InputGroup>
+                <Input type={'password'} variant={'flushed'} placeholder={'Ulangi kata sandi baru'} {...register("password2", {required: true})}/>
+            </InputGroup>
+        </Box>
+        <Box>
+            <Button size={'lg'} borderRadius={'full'} type="submit"
+                    colorScheme={'teal'}
+                    w={'100%'}>Perbaharui</Button>
+        </Box>
+    </form>
+}
 
 SubmitPenalty.propTypes = {
     studentId: PropTypes.number
 }
-export {Login, SubmitPenalty, Search}
+export {Login, SubmitPenalty, Search, ChangePassword}

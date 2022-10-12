@@ -2,14 +2,15 @@ import {useEffect, useState} from "react";
 import {helper} from "../../services/helper";
 import {PageContent} from "../../components/global";
 import {Text} from "@chakra-ui/react";
+import {PanelPage} from "../../components/account";
 
 const AccountPage = () => {
     const [name, setName] = useState('')
     useEffect(() => {
         setName(helper.getName)
     }, [])
-    return <PageContent id={'submit'} flowFromStart={true}>
+    return <PanelPage title={'Pengaturan'}>
         <Text>Coming soon</Text>
-    </PageContent>
+    </PanelPage>
 }
 export default AccountPage
