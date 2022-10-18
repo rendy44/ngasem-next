@@ -37,7 +37,7 @@ const FeedPage = () => {
             }} isLoading={props.isLoading} variant={'link'}>Muat lebih banyak</Button>
         </Center> : <></>
     }
-    return <PageContent id={'feed'} flowFromStart={true}>
+    return <PageContent id={'feed'} flowFromStart={true} containerWidth={'container.md'}>
         <Heading mb={9} as={'h1'}>Pelanggaran Terbaru</Heading>
         {isLoaded ? (feeds.length ? <>
             {feeds.map((feed, i) => {

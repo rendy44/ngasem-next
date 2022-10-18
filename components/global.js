@@ -26,7 +26,7 @@ import {
     Text, UnorderedList,
     useDisclosure
 } from "@chakra-ui/react";
-import {RiSettings3Line, RiTimeLine, RiUser3Line} from "react-icons/ri";
+import {RiChatNewLine, RiSettings3Line, RiTimeLine, RiUser3Line} from "react-icons/ri";
 import {AddIcon} from "@chakra-ui/icons";
 
 const ConfirmationDialog = props => {
@@ -131,33 +131,47 @@ const TopNav = () => {
                             <Box py={4}>
                                 <UnorderedList listStyleType={'none'} ml={0}>
                                     <ListItem mb={3}>
-                                        <NextLink href={'/account/feeds'}>
+                                        <NextLink href={'/account/submit'}>
                                             <Link textDecoration={'none'}>
                                                 <Flex>
-                                                    <Box pr={2}><Icon w={7} h={7} as={RiTimeLine}/></Box>
+                                                    <Box pr={2}><Icon w={7} h={7} as={RiChatNewLine}/></Box>
                                                     <Box>
-                                                        <Text fontWeight={'medium'}>Pelanggaran</Text>
-                                                        <Text fontWeight={'light'} fontSize={'sm'}>Informasi terkini terkait pencatatan pelanggaran</Text>
+                                                        <Text fontWeight={'medium'}>Laporan baru</Text>
+                                                        <Text fontWeight={'light'} fontSize={'sm'}>Buat laporan baru
+                                                            jika mendapati pelanggaran</Text>
                                                     </Box>
                                                 </Flex>
                                             </Link>
                                         </NextLink>
                                     </ListItem>
                                     <ListItem mb={3}>
-                                        <NextLink href={'/account'}>
+                                        <NextLink href={'/account/feeds'}>
                                             <Link textDecoration={'none'}>
                                                 <Flex>
-                                                    <Box pr={2}><Icon w={7} h={7} as={RiUser3Line}/></Box>
+                                                    <Box pr={2}><Icon w={7} h={7} as={RiTimeLine}/></Box>
                                                     <Box>
-                                                        <Text fontWeight={'medium'}>Profil</Text>
-                                                        <Text fontWeight={'light'} fontSize={'sm'}>Lihat detail profil
-                                                            dan pelanggaran
-                                                            yang sudah tercatat</Text>
+                                                        <Text fontWeight={'medium'}>Pelanggaran</Text>
+                                                        <Text fontWeight={'light'} fontSize={'sm'}>Informasi terkini
+                                                            terkait laporan pelanggaran</Text>
                                                     </Box>
                                                 </Flex>
                                             </Link>
                                         </NextLink>
                                     </ListItem>
+                                    {/*<ListItem mb={3}>*/}
+                                    {/*    <NextLink href={'/account'}>*/}
+                                    {/*        <Link textDecoration={'none'}>*/}
+                                    {/*            <Flex>*/}
+                                    {/*                <Box pr={2}><Icon w={7} h={7} as={RiUser3Line}/></Box>*/}
+                                    {/*                <Box>*/}
+                                    {/*                    <Text fontWeight={'medium'}>Profil</Text>*/}
+                                    {/*                    <Text fontWeight={'light'} fontSize={'sm'}>Lihat detail profil*/}
+                                    {/*                        dan pelanggaran yang sudah dilaporkan</Text>*/}
+                                    {/*                </Box>*/}
+                                    {/*            </Flex>*/}
+                                    {/*        </Link>*/}
+                                    {/*    </NextLink>*/}
+                                    {/*</ListItem>*/}
                                     <ListItem>
                                         <NextLink href={'/account/setting'}>
                                             <Link>
@@ -218,21 +232,6 @@ const TopNav = () => {
         </Container>
     </Box>
 }
-const PageContent = props => {
-    return <Flex pos={'relative'} flexDirection={'column'}
-                 justifyContent={props.flowFromStart ? 'flex-start' : 'space-between'} minH={'100vh'}>
-        <TopNav/>
-        <Section
-            customBgColor={props.customBgColor}
-            noTopPadding={props.noTopPadding}
-            id={props.id}
-            containerWidth={props.containerWidth}>
-            {props.children}
-        </Section>
-        <Box h={'69px'}></Box>
-        <Footer/>
-    </Flex>
-}
 const Section = props => {
     const headingElm = props.title ? <Heading as={'h1'} size={'2xl'}>{props.title}</Heading> : <></>
     return (
@@ -281,6 +280,21 @@ const Loader = () => {
     return <Flex pos={'fixed'} zIndex={999999999999} top={0} left={0} right={0} bottom={0} alignItems={'center'}
                  justifyContent={'center'}>
         <Spinner size={'xl'} thickness={'5px'} speed={'0.65s'} emptyColor={'gray.200'} color={'teal.500'}/>
+    </Flex>
+}
+const PageContent = props => {
+    return <Flex pos={'relative'} flexDirection={'column'}
+                 justifyContent={props.flowFromStart ? 'flex-start' : 'space-between'} minH={'100vh'}>
+        <TopNav/>
+        <Section
+            customBgColor={props.customBgColor}
+            noTopPadding={props.noTopPadding}
+            id={props.id}
+            containerWidth={props.containerWidth}>
+            {props.children}
+        </Section>
+        <Box h={'69px'}></Box>
+        <Footer/>
     </Flex>
 }
 

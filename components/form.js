@@ -9,18 +9,19 @@ import {penaltyService} from "../services/penalty.service";
 import {
     Avatar,
     Box,
-    Button, Flex, FormControl, FormLabel,
+    Button, Center, Flex, FormControl, FormLabel,
     Icon,
     Input,
     InputGroup,
-    InputLeftElement,
+    InputLeftElement, Link,
     Select, Switch, Text,
     Textarea, useDisclosure,
-    useToast
+    useToast, Wrap, WrapItem
 } from "@chakra-ui/react";
 import {RiImageEditLine, RiLockPasswordLine, RiSearchLine, RiUser3Line} from "react-icons/ri";
 import {WarningIcon} from "@chakra-ui/icons";
 import PropTypes from "prop-types";
+import NextLink from "next/link";
 
 const Login = () => {
     const router = useRouter()
@@ -361,8 +362,17 @@ const SubmitPenalty = props => {
                     dikirim, pastikan data yang dipilih sudah sesuai.</Text>
             </> : ''}
         <Box>
-            <Button size={'lg'} colorScheme={'teal'} width={'full'} borderRadius={'full'} isLoading={isDisabled}
-                    disabled={isDisabled} type={'submit'}>Kirim</Button>
+            <Flex flexDirection={{base: 'column', md: 'row'}} alignItems={'center'}>
+                <Button size={'lg'} colorScheme={'teal'} width={{base: 'full', md: 'auto'}} borderRadius={'full'}
+                        isLoading={isDisabled}
+                        disabled={isDisabled} type={'submit'}>Laporkan pelanggaran</Button>
+                <NextLink href={'/account/feeds'}>
+                    <Link mt={{base: 3, md: 0}} ml={{base: 0, md: 6}}>
+                        <Button variant={'link'}>Kembali</Button>
+                    </Link>
+                </NextLink>
+            </Flex>
+
             <ConfirmationDialog
                 title={'Konfirmasi'}
                 content={`Dengan melanjutkan, saya menyatakan secara sadar berhak memberikan pelanggarakn kepada ${selectedStudentName} selaku siswa ${selectedMajorName}.`}

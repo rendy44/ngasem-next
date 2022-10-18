@@ -17,8 +17,8 @@ const SubmitPage = () => {
             }
         }
     }, [isLoaded])
-    return <PageContent id={'submit'} flowFromStart={true}>
-        <Heading mb={9} as={'h1'}>Catat Pelanggaran</Heading>
+    return <PageContent id={'submit'} flowFromStart={true} containerWidth={'container.md'}>
+        <Heading mb={9} as={'h1'}>Buat Laporan</Heading>
         <SubmitPenalty/>
     </PageContent>
 }
