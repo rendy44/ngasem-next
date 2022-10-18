@@ -1,5 +1,8 @@
 import {fetchWrapper} from "./fetch-wrapper";
 
+const getFeeds = page => {
+    return fetchWrapper.get(`/api/feeds/${page}`)
+}
 const getCategories = () => {
     return fetchWrapper.get('/api/categories')
 }
@@ -18,4 +21,12 @@ const searchStudent = nis => {
 const getStudentDetail = id => {
     return fetchWrapper.get(`/api/student/${id}`)
 }
-export const dataService = {getCategories, getScores, getGradeMajors, getStudents, searchStudent, getStudentDetail}
+export const dataService = {
+    getFeeds,
+    getCategories,
+    getScores,
+    getGradeMajors,
+    getStudents,
+    searchStudent,
+    getStudentDetail
+}

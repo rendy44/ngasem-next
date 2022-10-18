@@ -19,11 +19,13 @@ function MyApp({Component, pageProps}) {
                 userService.detail(secretKey)
                     .then(res => {
                         if (res.success) {
-                            const {key, name, avatar, username} = res.data.data;
+                            const {key, name, avatar, username, fname, lname} = res.data.data;
                             helper.setKey(key)
                             helper.setName(name)
                             helper.setAvatar(avatar)
                             helper.setUserName(username)
+                            helper.setFirstName(fname)
+                            helper.setLastName(lname)
                             setIsLoaded(true)
                         } else {
                             toast({

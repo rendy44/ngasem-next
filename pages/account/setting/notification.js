@@ -1,9 +1,9 @@
-import {Text} from "@chakra-ui/react";
 import {PanelPage} from "../../../components/account";
+import {UpdateNotification} from "../../../components/form";
 
-const SettingNotificationPage = () => {
-    return <PanelPage title={'Pengaturan'}>
-        <Text>Coming soon</Text>
+const SettingPasswordPage = () => {
+    return <PanelPage title={'Pemberitahuan'}>
+        <UpdateNotification/>
     </PanelPage>
 }
-export default SettingNotificationPage
+export default SettingPasswordPage

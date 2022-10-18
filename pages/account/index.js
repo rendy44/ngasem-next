@@ -9,7 +9,7 @@ const AccountPage = () => {
     useEffect(() => {
         setName(helper.getName)
     }, [])
-    return <PanelPage title={'Pengaturan'}>
+    return <PanelPage title={'Profil'}>
         <Text>Coming soon</Text>
     </PanelPage>
 }

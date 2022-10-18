@@ -2,7 +2,6 @@ import {PageContent} from "./global";
 import PropTypes from "prop-types";
 import {
     Box,
-    Breadcrumb, BreadcrumbItem, BreadcrumbLink,
     Flex,
     Heading,
     Icon,
@@ -12,14 +11,18 @@ import {
     UnorderedList
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import {RiLockPasswordLine, RiNotification4Line, RiSettings3Line, RiUser3Line} from "react-icons/ri";
+import {
+    RiLockPasswordLine,
+    RiNotification4Line,
+    RiUserSettingsLine
+} from "react-icons/ri";
 
 const PanelPage = props => {
     return <PageContent id={'account'} flowFromStart={true}>
         <Heading mb={9} as={'h1'}>{props.title}</Heading>
         <Flex direction={{base: 'column', md: 'row'}}>
             <Box mb={{base: 6, md: 0}} w={{base: '100%', md: '35%', lg: '30%'}}>
-                <UnorderedList listStyleType={'none'} ml={0}>
+                <UnorderedList display={{base: 'none', md: 'block'}} listStyleType={'none'} ml={0}>
                     <ListItem mb={3}>
                         <NextLink href={'/account/setting/password'}>
                             <Link>
@@ -50,8 +53,7 @@ const PanelPage = props => {
                     </ListItem>
                 </UnorderedList>
             </Box>
-            <Box pl={{base: 0, md: 6}} w={{base: '100%', md: '65%', lg: '70%'}}>{props.subtitle ?
-                <Heading size={'lg'} fontWeight={'medium'} mb={6} as={'h2'}>{props.subtitle}</Heading> : <></>}
+            <Box pl={{base: 0, md: 6}} w={{base: '100%', md: '65%', lg: '70%'}}>
                 {props.children}
             </Box>
         </Flex>
@@ -60,6 +62,5 @@ const PanelPage = props => {
 PanelPage.propTypes = {
     noAddButton: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string
 }
 export {PanelPage}

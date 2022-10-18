@@ -1,8 +1,8 @@
 import {useRouter} from "next/router";
 
-const SettingPage = () => {
+const SettingAccountPage = () => {
     const router = useRouter()
     router.push('/account/setting/password')
     return <></>
 }
-export default SettingPage
+export default SettingAccountPage

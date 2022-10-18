@@ -6,6 +6,12 @@ const isLogin = () => {
 const getName = () => {
     return ReactSession.get('name');
 }
+const getFirstName = () => {
+    return ReactSession.get('fname')
+}
+const getLastName = () => {
+    return ReactSession.get('lname')
+}
 const getUserName = () => {
     return ReactSession.get('username')
 }
@@ -24,6 +30,12 @@ const setUserName = (username) => {
 const setName = (name) => {
     ReactSession.set('name', name);
 }
+const setFirstName = firstName => {
+    ReactSession.set('fname', firstName)
+}
+const setLastName = lastName => {
+    ReactSession.set('lname', lastName)
+}
 const setAvatar = avatar => {
     ReactSession.set('avatar', avatar)
 }
@@ -31,8 +43,23 @@ const logOut = () => {
     setKey('')
     setUserName('')
     setName('')
+    setFirstName('')
+    setLastName('')
     setAvatar('')
 }
 export const helper = {
-    isLogin, getName, getUserName, getKey, getAvatar, setName, setUserName, setKey, setAvatar, logOut
+    isLogin,
+    getName,
+    getUserName,
+    getKey,
+    getAvatar,
+    setName,
+    setFirstName,
+    setLastName,
+    getFirstName,
+    getLastName,
+    setUserName,
+    setKey,
+    setAvatar,
+    logOut
 }

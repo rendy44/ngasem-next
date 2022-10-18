@@ -77,12 +77,13 @@ const StudentDetailPage = () => {
                                 <TabPanels>
                                     <TabPanel px={0}>
                                         {data.penalties ? Object.entries(data.penalties).map((penalty, i) => {
-                                            return <PenaltyItem key={i}
+                                            return <PenaltyItem
+                                                key={i}
                                                 avatar={penalty[1].avatar}
                                                 teacher={penalty[1].teacher}
-                                                point={penalty[1].point}
+                                                point={parseInt(penalty[1].point)}
                                                 penalty={penalty[1].penalty}
-                                                time_span={penalty[1].date_span}
+                                                timeSpan={penalty[1].date_span}
                                                 description={penalty[1].description}/>
                                         }) : <Text>Belum ada pelanggaran yang tercatat</Text>}
                                     </TabPanel>

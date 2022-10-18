@@ -26,7 +26,7 @@ import {
     Text, UnorderedList,
     useDisclosure
 } from "@chakra-ui/react";
-import {RiSettings3Line, RiUser3Line} from "react-icons/ri";
+import {RiSettings3Line, RiTimeLine, RiUser3Line} from "react-icons/ri";
 import {AddIcon} from "@chakra-ui/icons";
 
 const ConfirmationDialog = props => {
@@ -131,6 +131,19 @@ const TopNav = () => {
                             <Box py={4}>
                                 <UnorderedList listStyleType={'none'} ml={0}>
                                     <ListItem mb={3}>
+                                        <NextLink href={'/account/feeds'}>
+                                            <Link textDecoration={'none'}>
+                                                <Flex>
+                                                    <Box pr={2}><Icon w={7} h={7} as={RiTimeLine}/></Box>
+                                                    <Box>
+                                                        <Text fontWeight={'medium'}>Pelanggaran</Text>
+                                                        <Text fontWeight={'light'} fontSize={'sm'}>Informasi terkini terkait pencatatan pelanggaran</Text>
+                                                    </Box>
+                                                </Flex>
+                                            </Link>
+                                        </NextLink>
+                                    </ListItem>
+                                    <ListItem mb={3}>
                                         <NextLink href={'/account'}>
                                             <Link textDecoration={'none'}>
                                                 <Flex>
@@ -224,7 +237,7 @@ const Section = props => {
     const headingElm = props.title ? <Heading as={'h1'} size={'2xl'}>{props.title}</Heading> : <></>
     return (
         <Box bg={props.customBgColor ?? 'white'} pb={{base: 12, md: 20}}
-             pt={props.noTopPadding ? 0 : {base: 12, md: 20}}>
+             pt={props.noTopPadding ? 0 : {base: 12, lg: 20}}>
             <Container maxW={props.containerWidth ?? 'container.xl'}>
                 <Box>
                     {props.isTitleCenter ? <Center>{headingElm}</Center> : <Box>{headingElm}</Box>}
@@ -250,13 +263,13 @@ const Footer = () => {
                     </Center>
                 </Container>
             </Box>
-            {isLogin && '/account/submit' !== router.pathname ?
-                <Box pos={'fixed'} bottom={{base: 3, md: 6}} right={{base: 3, md: 6}}>
+            {isLogin && '/account/feeds' === router.pathname ?
+                <Box pos={'fixed'} bottom={6} right={{base: 3, md: 6}}>
                     <NextLink
                         href={'/student/[id]' === router.pathname && router.query.id ? `/account/submit/${router.query.id}` : '/account/submit'}>
                         <Link borderRadius={'full'} color={'white'} boxShadow={'dark-lg'} bg={'teal'}
-                              display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'50px'}
-                              h={'50px'}>
+                              display={'inline-flex'} alignItems={'center'} justifyContent={'center'} w={'56px'}
+                              h={'56px'}>
                             <AddIcon fontSize={'2xl'}/>
                         </Link>
                     </NextLink>

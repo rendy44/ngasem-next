@@ -7,18 +7,18 @@ import {dataService} from "../services/data.service";
 import {ConfirmationDialog, Loader} from "./global";
 import {penaltyService} from "../services/penalty.service";
 import {
+    Avatar,
     Box,
-    Button,
-    Flex,
+    Button, Flex, FormControl, FormLabel,
     Icon,
     Input,
     InputGroup,
     InputLeftElement,
-    Select, Text,
+    Select, Switch, Text,
     Textarea, useDisclosure,
     useToast
 } from "@chakra-ui/react";
-import {RiLockPasswordLine, RiSearchLine, RiUser3Line} from "react-icons/ri";
+import {RiImageEditLine, RiLockPasswordLine, RiSearchLine, RiUser3Line} from "react-icons/ri";
 import {WarningIcon} from "@chakra-ui/icons";
 import PropTypes from "prop-types";
 
@@ -43,7 +43,7 @@ const Login = () => {
                     helper.setUserName(username)
 
                     // Reload to the panel route.
-                    router.push('/account/submit')
+                    router.push('/account/feeds')
                 } else {
                     toast({
                         title: 'Terjadi kesalahan',
@@ -283,19 +283,21 @@ const SubmitPenalty = props => {
         setSelectedStudentName(newStudentName)
     }
     return isLoaded ? <form onSubmit={handleSubmit(onSubmit)}>
-        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
-            <InputGroup>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl mb={3}>
+                <FormLabel mb={0}>Kategori pelanggaran</FormLabel>
                 <Select variant={'flushed'} {...register('category', {
                     onChange: onCategoryChange,
                     required: true,
                 })} value={selectedCategoryId}>
-                    <option key={''} value={''}>Pilih jenis pelanggaran</option>
+                    <option key={''} value={''}>Pilih kategori pelanggaran</option>
                     {categories.map((cat) => {
                         return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
                     })}
                 </Select>
-            </InputGroup>
-            <InputGroup>
+            </FormControl>
+            <FormControl mb={3}>
+                <FormLabel mb={0}>Pelanggaran</FormLabel>
                 <Select variant={'flushed'} disabled={isScoreDisabled} {...register('score', {
                     onChange: onScoreChange,
                     required: true
@@ -305,9 +307,10 @@ const SubmitPenalty = props => {
                         return <option data-point={cat[1].point} key={cat[0]} value={cat[0]}>{cat[1].title}</option>
                     })}
                 </Select>
-            </InputGroup>
+            </FormControl>
             {!props.studentId ? <>
-                <InputGroup>
+                <FormControl mb={3}>
+                    <FormLabel mb={0}>Kelas</FormLabel>
                     <Select variant={'flushed'} {...register('grade', {
                         onChange: onGradeChange,
                         required: true,
@@ -317,8 +320,9 @@ const SubmitPenalty = props => {
                             return <option key={cat} value={cat}>{`Kelas ${cat.toUpperCase()}`}</option>
                         })}
                     </Select>
-                </InputGroup>
-                <InputGroup>
+                </FormControl>
+                <FormControl mb={3}>
+                    <FormLabel mb={0}>Jurusan</FormLabel>
                     <Select variant={'flushed'} disabled={isMajorDisabled} {...register('major', {
                         onChange: onMajorChange,
                         required: true
@@ -328,8 +332,9 @@ const SubmitPenalty = props => {
                             return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
                         })}
                     </Select>
-                </InputGroup>
-                <InputGroup>
+                </FormControl>
+                <FormControl mb={3}>
+                    <FormLabel mb={0}>Siswa</FormLabel>
                     <Select variant={'flushed'} disabled={isStudentDisabled} {...register('student', {
                         onChange: onStudentChange,
                         required: true,
@@ -339,15 +344,16 @@ const SubmitPenalty = props => {
                             return <option key={cat[0]} value={cat[0]}>{cat[1]}</option>
                         })}
                     </Select>
-                </InputGroup>
+                </FormControl>
             </> : <></>}
-            <InputGroup>
+            <FormControl>
+                <FormLabel mb={0}>Keterangan</FormLabel>
                 <Textarea variant={'flushed'} {...register('description', {
                     onChange: e => {
                         setCurrentDescription(e.target.value)
                     },
                 })} value={currentDescription} placeholder={'Keterangan terkait pelanggaran'}></Textarea>
-            </InputGroup>
+            </FormControl>
         </Box>
         {selectedCategoryName && selectedScorePoint && selectedScoreName && selectedStudentId ?
             <>
@@ -406,29 +412,106 @@ const Search = () => {
         </Flex>
     </form>
 }
-const ChangePassword = () =>{
+const ChangePassword = () => {
     const {register, handleSubmit} = useForm()
-    const onSubmit = (e) =>{
+    const onSubmit = (e) => {
 
     }
     return <form onSubmit={handleSubmit(onSubmit)}>
-        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
-            <InputGroup>
-                <Input type={'password'} variant={'flushed'} placeholder={'Kata sandi saat ini'} {...register("password", {required: true})}/>
-            </InputGroup>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl>
+                <FormLabel mb={0}>Kata sandi saat ini</FormLabel>
+                <Input type={'password'} placeholder={'********'}
+                       variant={'flushed'} {...register("password", {required: true})}/>
+            </FormControl>
         </Box>
-        <Box p={3} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
-            <InputGroup>
-                <Input type={'password'} variant={'flushed'} placeholder={'Kata sandi baru'} {...register("password1", {required: true})}/>
-            </InputGroup>
-            <InputGroup>
-                <Input type={'password'} variant={'flushed'} placeholder={'Ulangi kata sandi baru'} {...register("password2", {required: true})}/>
-            </InputGroup>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl mb={3}>
+                <FormLabel mb={0}>Kata sandi baru</FormLabel>
+                <Input type={'password'} variant={'flushed'}
+                       placeholder={'********'} {...register("password1", {required: true})}/>
+            </FormControl>
+            <FormControl>
+                <FormLabel mb={0}>Ulangi kata sandi baru</FormLabel>
+                <Input type={'password'} variant={'flushed'}
+                       placeholder={'********'} {...register("password2", {required: true})}/>
+            </FormControl>
         </Box>
         <Box>
             <Button size={'lg'} borderRadius={'full'} type="submit"
                     colorScheme={'teal'}
-                    w={'100%'}>Perbaharui</Button>
+                    w={{base: '100%', md: 'auto'}}>Perbaharui</Button>
+        </Box>
+    </form>
+}
+const UpdateNotification = () => {
+    const {register, handleSubmit} = useForm()
+    const onSubmit = (e) => {
+
+    }
+    return <form onSubmit={handleSubmit(onSubmit)}>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl>
+                <FormLabel mb={0}>Alamat email</FormLabel>
+                <Input type={'email'} placeholder={'Contoh: user@domain.com'}
+                       variant={'flushed'} {...register("email", {required: true})}/>
+            </FormControl>
+        </Box>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl mb={3} display={'flex'} alignItems={'center'}>
+                <FormLabel htmlFor={'new'} mb={0}>Pelanggaran baru</FormLabel>
+                <Switch id={'new'}/>
+            </FormControl>
+            <FormControl mb={3} display={'flex'} alignItems={'center'}>
+                <FormLabel htmlFor={'advance'} mb={0}>Siswa butuh tindakan lanjutan</FormLabel>
+                <Switch id={'advance'}/>
+            </FormControl>
+        </Box>
+        <Box>
+            <Button size={'lg'} borderRadius={'full'} type="submit"
+                    colorScheme={'teal'}
+                    w={{base: '100%', md: 'auto'}}>Perbaharui</Button>
+        </Box>
+    </form>
+}
+const UpdateAccount = () => {
+    const {register, handleSubmit} = useForm()
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    useEffect(() => {
+        setFirstName(helper.getFirstName)
+        setLastName(helper.getLastName)
+    }, [])
+    const onSubmit = (e) => {
+
+    }
+    return <form onSubmit={handleSubmit(onSubmit)}>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl mb={3}>
+                <Box pos={'relative'}>
+                    <Icon as={RiImageEditLine}/>
+                    <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo'/>
+                    <Input display={'none'} type={'file'} value={''} placeholder={'Disarankan foto dengan skala 1:1'}
+                           accept={"image/png, image/gif, image/jpeg"} variant={'unstyled'} {...register("photo")}/>
+                </Box>
+            </FormControl>
+        </Box>
+        <Box p={{base: 3, md: 6}} mb={6} bg={'blackAlpha.100'} borderRadius={'20px'}>
+            <FormControl mb={3}>
+                <FormLabel mb={0}>Nama depan</FormLabel>
+                <Input type={'text'} value={firstName} placeholder={'Nama depan'}
+                       variant={'flushed'} {...register("fname", {required: true})}/>
+            </FormControl>
+            <FormControl>
+                <FormLabel mb={0}>Nama belakang</FormLabel>
+                <Input type={'text'} value={lastName} placeholder={'Nama belakang'}
+                       variant={'flushed'} {...register("lname", {required: true})}/>
+            </FormControl>
+        </Box>
+        <Box>
+            <Button size={'lg'} borderRadius={'full'} type="submit"
+                    colorScheme={'teal'}
+                    w={{base: '100%', md: 'auto'}}>Perbaharui</Button>
         </Box>
     </form>
 }
@@ -436,4 +519,4 @@ const ChangePassword = () =>{
 SubmitPenalty.propTypes = {
     studentId: PropTypes.number
 }
-export {Login, SubmitPenalty, Search, ChangePassword}
+export {Login, SubmitPenalty, Search, ChangePassword, UpdateNotification, UpdateAccount}

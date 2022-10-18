@@ -6,6 +6,9 @@ const login = (user, password) => {
         password: password
     }, false)
 }
+const getFeeds = page => {
+    return fetchWrapper.get(`feeds?page=${page}`, false)
+}
 const getCategories = () => {
     return fetchWrapper.get('categories', false)
 }
@@ -37,6 +40,7 @@ const getAccountDetail = key => {
 }
 export const apiService = {
     login,
+    getFeeds,
     getCategories,
     getScores,
     getGrades,
