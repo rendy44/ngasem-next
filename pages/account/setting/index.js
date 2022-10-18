@@ -1,8 +1,13 @@
-import {useRouter} from "next/router";
-
-const SettingAccountPage = () => {
-    const router = useRouter()
-    router.push('/account/setting/password')
+const SettingAccountPage = ({props}) => {
     return <></>
+}
+
+export const getServerSideProps = async () => {
+    return {
+        redirect: {
+            permanent: true,
+            destination: '/account/setting/password'
+        }
+    }
 }
 export default SettingAccountPage
